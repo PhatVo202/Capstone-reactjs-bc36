@@ -21,14 +21,10 @@ export default function Header() {
 
   return (
     <div className="header__content">
-      <div className="container">
+      <div className="container-xl bg-rg">
         <nav className="navbar navbar-expand-sm navbar-light ml-auto">
           <Link className="navbar-brand" to="/">
-            <img
-              src="http://logovina.com/wp-content/uploads/2017/01/logo-cong-ty-truyen-hinh-warner-bros.jpg"
-              width={200}
-              height={60}
-            />
+            <img src="./img/logo.png" width={240} height={70} />
           </Link>
           <button
             className="navbar-toggler d-lg-none"
@@ -94,6 +90,7 @@ export default function Header() {
                       className="btn__register"
                       danger
                       type="text"
+                      onClick={() => navigate("/register")}
                     >
                       Đăng ký
                     </Button>

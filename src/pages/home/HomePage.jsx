@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <div className="py-2">
       <CarouselMovies />
-      <MovieList />
+      <MovieList className="mt-2" />
       <News />
     </div>
   );

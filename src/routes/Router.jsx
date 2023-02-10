@@ -11,6 +11,7 @@ import HomePage from "pages/home/HomePage";
 import Login from "pages/login/Login";
 import MovieDetail from "pages/movie-detail/MovieDetail";
 import MovieManagement from "pages/movie-management/MovieManagement";
+import Register from "pages/register/Register";
 
 export default function Router() {
   const routing = useRoutes([
@@ -45,6 +46,10 @@ export default function Router() {
               element: <Login />,
             },
           ],
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },
