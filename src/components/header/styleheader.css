@@ -1,0 +1,41 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* .header__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.4);
+  } */
+
+#collapsibleNavId .navbar-nav {
+  list-style: none;
+}
+
+#collapsibleNavId .nav-item {
+  padding: 0 10px;
+}
+
+#collapsibleNavId .nav-item .nav-link {
+  text-decoration: none;
+  color: black;
+}
+
+#collapsibleNavId .nav-item .nav-link:hover {
+  transition: all 0.5s;
+  color: #ff4d4f;
+}
+
+.btn__register {
+  margin: 0 20px;
+}

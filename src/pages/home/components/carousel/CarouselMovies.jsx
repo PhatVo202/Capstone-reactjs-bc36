@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
+import { fetchBannerCarouselListApi } from "services/carouselbanner";
 
 const contentStyle = {
   width: "100%",
@@ -11,25 +12,34 @@ export default function CarouselMovies() {
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
+
+  const [bannerList, setBannerList] = useState([]);
+
+  useEffect(() => {
+    getBannerCarouselList();
+  }, []);
+
+  const getBannerCarouselList = async () => {
+    const result = await fetchBannerCarouselListApi();
+
+    setBannerList(result.data.content);
+  };
+
+  const renderBannerList = () => {
+    return bannerList.map((item, index) => {
+      return (
+        <div key={index}>
+          <div>
+            <img style={contentStyle} src={item.hinhAnh} />
+          </div>
+        </div>
+      );
+    });
+  };
+
   return (
     <Carousel afterChange={onChange} dotPosition="right" autoplay={true}>
-      <div>
-        <div>
-          <img
-            style={contentStyle}
-            src="https://i.ytimg.com/vi/FoZbdtQMTvM/maxresdefault.jpg"
-          />
-        </div>
-      </div>
-
-      <div>
-        <div>
-          <img
-            style={contentStyle}
-            src="https://media.doisongphapluat.com/thumb_x1280x857/media/dang-nhat-duy/2022/12/03/poster-phim-tran-thanh-nha-ba-nu-dspl-31220222.jpg"
-          />
-        </div>
-      </div>
+      {renderBannerList()}
     </Carousel>
   );
 }
