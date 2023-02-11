@@ -10,9 +10,7 @@ const contentStyle = {
 };
 
 export default function CarouselMovies() {
-  const onChange = (currentSlide) => {
-    console.log(currentSlide);
-  };
+  const onChange = (currentSlide) => {};
 
   const [bannerList, setBannerList] = useState([]);
 

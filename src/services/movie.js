@@ -2,7 +2,7 @@ import { axiosRequest } from "../configs/axios.config";
 
 export const fetchMovieListApi = () => {
   return axiosRequest({
-    url: `/QuanLyPhim/LayDanhSachPhim?maNhom=GP02`,
+    url: `/QuanLyPhim/LayDanhSachPhim?maNhom=GP03`,
     method: "GET",
   });
 };
