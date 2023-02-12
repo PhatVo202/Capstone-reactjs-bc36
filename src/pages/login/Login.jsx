@@ -38,30 +38,6 @@ export default function Login() {
 
   return (
     <div className="bg__login">
-      {/* <div className="w-25 mx-auto py-5">
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              name="taiKhoan"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="">Password</label>
-            <input
-              type="text"
-              className="form-control"
-              name="matKhau"
-              onChange={handleChange}
-            />
-          </div>
-          <button className="btn btn-primary">LOGIN</button>
-        </form>
-      </div> */}
-
       <div className="center">
         <h1>Login</h1>
         <form method="post" onSubmit={handleSubmit}>

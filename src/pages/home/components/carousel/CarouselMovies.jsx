@@ -22,7 +22,6 @@ export default function CarouselMovies() {
     const result = await fetchBannerCarouselListApi();
 
     setBannerList(result.data.content);
-    console.log(result);
   };
 
   const renderBannerList = () => {
