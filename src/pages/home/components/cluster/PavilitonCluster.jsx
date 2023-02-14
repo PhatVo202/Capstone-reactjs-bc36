@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { fetchInforClusterApi } from "services/inforcluster";
 import { fetchSystemClusterApi } from "services/systemcluster";
 
 export default function PavilitonCluster() {
   const [systemCluster, setSystemCluster] = useState([]);
 
+  const [inforCluster, setInforCluster] = useState({});
+
   useEffect(() => {
     getSystemCluster();
+    getInforCluster();
   }, []);
 
   const getSystemCluster = async () => {
     const result = await fetchSystemClusterApi();
 
     setSystemCluster(result.data.content);
+  };
+
+  const getInforCluster = async () => {
+    const result = await fetchInforClusterApi();
     console.log(result);
+    setInforCluster(result.data.content);
   };
 
   const renderTab = () => {
@@ -32,6 +41,31 @@ export default function PavilitonCluster() {
     });
   };
 
+  const renderInforCluster = () => {
+    return inforCluster?.map((item, index) => {
+      return (
+        <div
+          key={index}
+          className={`tab-pane fade show ${index === 0 && "active"}`}
+          id={item.maHeThongRap}
+          role="tabpanel"
+          aria-labelledby="v-pills-home-tab"
+        >
+          {item?.lstCumRap?.map((item, index) => {
+            return (
+              <div key={index}>
+                <div className="d-flex mb-3">
+                  <img src={item.hinhAnh} alt="" width={50} height={50} />
+                  <p style={{ color: "white" }}>{item.tenCumRap}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    });
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -47,38 +81,7 @@ export default function PavilitonCluster() {
         </div>
         <div className="col-9">
           <div className="tab-content" id="v-pills-tabContent">
-            <div
-              className="tab-pane fade show active"
-              id="v-pills-home"
-              role="tabpanel"
-              aria-labelledby="v-pills-home-tab"
-            >
-              ...
-            </div>
-            <div
-              className="tab-pane fade"
-              id="v-pills-profile"
-              role="tabpanel"
-              aria-labelledby="v-pills-profile-tab"
-            >
-              ...
-            </div>
-            <div
-              className="tab-pane fade"
-              id="v-pills-messages"
-              role="tabpanel"
-              aria-labelledby="v-pills-messages-tab"
-            >
-              ...
-            </div>
-            <div
-              className="tab-pane fade"
-              id="v-pills-settings"
-              role="tabpanel"
-              aria-labelledby="v-pills-settings-tab"
-            >
-              ...
-            </div>
+            {/* {renderInforCluster()} */}
           </div>
         </div>
       </div>

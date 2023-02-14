@@ -9,3 +9,10 @@ export const loginApi = (information) => {
     data: information,
   });
 };
+
+export const registerApi = () => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/DangKy`,
+    method: "POST",
+  });
+};

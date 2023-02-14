@@ -45,8 +45,8 @@ export default function Login() {
             <input
               type="text"
               required
-              onChange={handleChange}
               name="taiKhoan"
+              onChange={handleChange}
             />
             <span />
             <label>Username</label>

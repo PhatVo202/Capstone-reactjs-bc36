@@ -6,10 +6,3 @@ export const fetchSystemClusterApi = () => {
     method: "GET",
   });
 };
-
-export const fetchInforCalendarApi = (id) => {
-  return axiosRequest({
-    url: `/QuanLyRap/LayThongTinLichChieuHeThongRap${id}`,
-    method: "GET",
-  });
-};
