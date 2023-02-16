@@ -1,17 +1,22 @@
+import { SET_REGISTER_INFO } from "store/types/registerType";
+
 const DEFAULT_STATE = {
-  taiKhoan: "",
-  matKhau: "",
-  maNhom: "",
-  hoTen: "",
-  email: "",
-  soDt: "",
+  nd: null,
 };
+
+if (localStorage.getItem("REGISTER_INFO_KEY")) {
+  DEFAULT_STATE.userInfo = JSON.parse(
+    localStorage.getItem("REGISTER_INFO_KEY")
+  );
+}
 
 export const registerUserReducer = (state = DEFAULT_STATE, action) => {
   const { type, payload } = action;
   switch (type) {
-    case "":
+    case SET_REGISTER_INFO: {
+      state.nd = payload;
       break;
+    }
 
     default:
       break;

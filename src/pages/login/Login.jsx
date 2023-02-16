@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../services/user";
 import { setUserInfoAction } from "../../store/actions/userAction";
 
+import { Link } from "react-router-dom";
+
 import "./stylelogin.css";
 
 export default function Login() {
@@ -64,7 +66,7 @@ export default function Login() {
           <div className="pass">Forgot Password?</div>
           <input type="submit" defaultValue="Login" />
           <div className="signup_link">
-            Not a member? <a href="#">Signup</a>
+            Not a member? <Link to="/register">Signup</Link>
           </div>
         </form>
       </div>

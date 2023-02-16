@@ -10,9 +10,10 @@ export const loginApi = (information) => {
   });
 };
 
-export const registerApi = () => {
+export const registerApi = (information) => {
   return axiosRequest({
     url: `/QuanLyNguoiDung/DangKy`,
     method: "POST",
+    data: information,
   });
 };

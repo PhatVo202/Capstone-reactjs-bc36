@@ -4,27 +4,30 @@ import { useNavigate } from "react-router-dom";
 import { registerApi } from "services/user";
 
 import { Space, Alert } from "antd";
+import { error } from "jquery";
+import { useDispatch } from "react-redux";
+import { setRegisterInfoAction } from "store/actions/registerAction";
 
 export default function Register() {
   const navigate = useNavigate();
-  const ref = useRef();
+  const dispatch = useDispatch();
 
   const [values, setValues] = useState({
     taiKhoan: "",
     matKhau: "",
-    maNhom: "",
-    hoTen: "",
     email: "",
     soDt: "",
+    maNhom: "GP03",
+    hoTen: "",
   });
 
   const [errors, setErrors] = useState({
     taiKhoan: "",
     matKhau: "",
-    maNhom: "",
-    hoTen: "",
     email: "",
     soDt: "",
+    maNhom: "",
+    hoTen: "",
   });
 
   const handleBlur = (event) => {
@@ -34,7 +37,7 @@ export default function Register() {
     const { valueMissing, tooShort, tooLong, patternMismatch } = validity;
 
     if (valueMissing) {
-      message = `${title} is required`;
+      message = `${title} không được để trống`;
     }
 
     if (tooShort || tooLong) {
@@ -42,7 +45,7 @@ export default function Register() {
     }
 
     if (patternMismatch) {
-      message = `${title} is invalid partern`;
+      message = `${title} không đúng định dạng`;
     }
 
     setErrors({
@@ -63,14 +66,12 @@ export default function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const isValid = event.target.checkValidity();
-
-    if (!isValid) {
-      return;
-    }
-
     const result = await registerApi(values);
-
+    localStorage.setItem(
+      "REGISTER_INFO_KEY",
+      JSON.stringify(result.data.content)
+    );
+    dispatch(setRegisterInfoAction(result.data.content));
     navigate("/login");
   };
 
@@ -78,7 +79,11 @@ export default function Register() {
     <div className="bg__login">
       <div className="center">
         <h1>Register</h1>
-        <form method="post" onSubmit={(event) => handleSubmit(event)}>
+        <form
+          noValidate
+          method="post"
+          onSubmit={(event) => handleSubmit(event)}
+        >
           <div className="txt_field">
             <input
               type="text"
@@ -89,7 +94,10 @@ export default function Register() {
               onChange={(event) => handleChange(event)}
             />
             <span />
-            <label>Tài khoản</label>
+            <label>
+              Tài khoản
+              <span className="text-danger ml-3">{errors.taiKhoan}</span>
+            </label>
           </div>
           <div className="txt_field">
             <input
@@ -101,17 +109,13 @@ export default function Register() {
               onChange={(event) => handleChange(event)}
             />
             <span />
-            <label>Mật khẩu</label>
+            <label>
+              Mật khẩu
+              <span className="text-danger ml-3">{errors.matKhau}</span>
+            </label>
           </div>
           <div className="txt_field">
-            <input
-              type="password"
-              required
-              title="Password"
-              name="maNhom"
-              onBlur={(event) => handleBlur(event)}
-              onChange={(event) => handleChange(event)}
-            />
+            <input type="password" required title="Password" />
             <span />
             <label>Nhập lại mật khẩu</label>
           </div>
@@ -127,7 +131,9 @@ export default function Register() {
               onChange={(event) => handleChange(event)}
             />
             <span />
-            <label>Họ tên</label>
+            <label>
+              Họ tên <span className="text-danger ml-3">{errors.hoTen}</span>
+            </label>
           </div>
 
           <div className="txt_field">
@@ -141,7 +147,9 @@ export default function Register() {
               onChange={(event) => handleChange(event)}
             />
             <span />
-            <label>Email</label>
+            <label>
+              Email <span className="text-danger ml-3">{errors.email}</span>
+            </label>
           </div>
           <div className="txt_field">
             <input
@@ -155,13 +163,12 @@ export default function Register() {
               onChange={(event) => handleChange(event)}
             />
             <span />
-            <label>SDT</label>
+            <label>
+              SDT <span className="text-danger ml-3">{errors.soDt}</span>
+            </label>
           </div>
           <div className="pass">Forgot Password?</div>
           <input type="submit" defaultValue="Login" />
-          <div className="signup_link">
-            Not a member? <a href="#">Signup</a>
-          </div>
         </form>
       </div>
     </div>

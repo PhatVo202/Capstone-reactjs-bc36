@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { fetchInforClusterApi } from "services/inforcluster";
 import { fetchSystemClusterApi } from "services/systemcluster";
+
+import { Tabs, Select } from "antd";
+import { formatDate } from "utils";
+
+import { NavLink } from "react-router-dom";
+
+const { TabPane } = Tabs;
+const { Option } = Select;
 
 export default function PavilitonCluster() {
   const [systemCluster, setSystemCluster] = useState([]);
 
-  const [inforCluster, setInforCluster] = useState({});
+  const [inforCluster, setInforCluster] = useState([]);
 
   useEffect(() => {
     getSystemCluster();
@@ -16,10 +24,11 @@ export default function PavilitonCluster() {
     const result = await fetchSystemClusterApi();
 
     setSystemCluster(result.data.content);
+    // console.log(result);
   };
 
   const getInforCluster = async () => {
-    const result = await fetchInforClusterApi();
+    const result = await fetchInforClusterApi(systemCluster.maHeThongRap);
     console.log(result);
     setInforCluster(result.data.content);
   };
@@ -56,7 +65,10 @@ export default function PavilitonCluster() {
               <div key={index}>
                 <div className="d-flex mb-3">
                   <img src={item.hinhAnh} alt="" width={50} height={50} />
-                  <p style={{ color: "white" }}>{item.tenCumRap}</p>
+                  <div>
+                    <p style={{ color: "white" }}>{item.tenCumRap}</p>
+                    <p className="text-white">{item.diaChi}</p>
+                  </div>
                 </div>
               </div>
             );
@@ -69,21 +81,81 @@ export default function PavilitonCluster() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-3">
-          <div
-            className="nav flex-column nav-pills"
-            id="v-pills-tab"
-            role="tablist"
-            aria-orientation="vertical"
-          >
-            {renderTab()}
-          </div>
-        </div>
-        <div className="col-9">
-          <div className="tab-content" id="v-pills-tabContent">
-            {/* {renderInforCluster()} */}
-          </div>
-        </div>
+        <Tabs className="bg-white col-12 " tabPosition={"left"}>
+          {inforCluster?.map((item, index) => {
+            return (
+              <TabPane
+                tab={
+                  <div>
+                    <img src={item.logo} alt="" width={50} height={50} />
+                  </div>
+                }
+                key={index}
+              >
+                <Tabs tabPosition="left">
+                  {item.lstCumRap?.map((item, index) => {
+                    return (
+                      <TabPane
+                        tab={
+                          <div>
+                            <img
+                              src={item.hinhAnh}
+                              alt=""
+                              width={50}
+                              height={50}
+                            />
+                            <span style={{ fontSize: "14px" }}>
+                              {item.tenCumRap}
+                            </span>
+                            <p style={{ fontSize: "12px" }}>{item.diaChi}</p>
+                          </div>
+                        }
+                        key={index}
+                      >
+                        {item.danhSachPhim?.map((item, index) => {
+                          return (
+                            <Fragment key={index}>
+                              <div className="my-5">
+                                <div>
+                                  <img
+                                    src={item.hinhAnh}
+                                    alt=""
+                                    width={100}
+                                    height={100}
+                                  />
+                                  <div>
+                                    <h4>{item.tenPhim}</h4>
+                                    <div>
+                                      {item.lstLichChieuTheoPhim?.map(
+                                        (item, index) => {
+                                          return (
+                                            <NavLink
+                                              className="mr-2"
+                                              to={`/booking/${item.maLichChieu}`}
+                                              key={index}
+                                            >
+                                              {formatDate(
+                                                item.ngayChieuGioChieu
+                                              )}
+                                            </NavLink>
+                                          );
+                                        }
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </Fragment>
+                          );
+                        })}
+                      </TabPane>
+                    );
+                  })}
+                </Tabs>
+              </TabPane>
+            );
+          })}
+        </Tabs>
       </div>
     </div>
   );
