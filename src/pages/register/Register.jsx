@@ -1,16 +1,18 @@
-import { Button } from "antd";
+import { Button, notification } from "antd";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerApi } from "services/user";
 
 import { CloseOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Space } from "antd";
 import { setRegisterInfoAction } from "store/actions/registerAction";
 
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const registerUserState = useSelector((state) => state.registerUserReducer);
 
   const [values, setValues] = useState({
     taiKhoan: "",
@@ -72,6 +74,12 @@ export default function Register() {
       JSON.stringify(result.data.content)
     );
     dispatch(setRegisterInfoAction(result.data.content));
+    if (registerUserState.nd) {
+      notification.success({
+        message: "Đăng ký thành công!",
+      });
+    }
+
     navigate("/login");
   };
 

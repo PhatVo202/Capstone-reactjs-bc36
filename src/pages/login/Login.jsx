@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../services/user";
 import { setUserInfoAction } from "../../store/actions/userAction";
@@ -10,11 +10,13 @@ import { Link } from "react-router-dom";
 import "./stylelogin.css";
 
 import { CloseOutlined } from "@ant-design/icons";
-import { Space } from "antd";
+import { notification, Space } from "antd";
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const userState = useSelector((state) => state.userReducer);
 
   const [state, setState] = useState({
     taiKhoan: "",
@@ -37,8 +39,12 @@ export default function Login() {
 
     localStorage.setItem("USER_INFO_KEY", JSON.stringify(result.data.content));
     dispatch(setUserInfoAction(result.data.content));
+    if (userState.userInfo) {
+      notification.success({
+        message: "Đăng nhập thành công!",
+      });
+    }
     navigate("/");
-    console.log(result.data.content);
   };
 
   return (
