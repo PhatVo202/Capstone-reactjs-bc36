@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { setUserInfoAction } from "../../store/actions/userAction";
@@ -22,7 +22,7 @@ export default function Header() {
   return (
     <div className="header__content">
       <div className="container-xl bg-rg">
-        <nav className="navbar navbar-expand-sm navbar-light ml-auto">
+        <nav className="navbar navbar-expand-md navbar-light ml-auto">
           <Link className="navbar-brand" to="/">
             <img src="./img/logo.png" width={240} height={70} />
           </Link>
@@ -67,44 +67,60 @@ export default function Header() {
                 </NavLink>
               </li>
             </ul>
-            <div>
+            <div className="mr-4">
               {userState.userInfo ? (
-                <>
-                  <span className="mr-3">
-                    <Space size={16} wrap>
-                      <Avatar icon={<UserOutlined />} />
+                <Fragment className="container">
+                  <div className="row" style={{ textAlign: "center" }}>
+                    <span className=" text-white col-sm-12 col-md-6 col-xl-6">
+                      <Space size={16} wrap>
+                        <Avatar icon={<UserOutlined />} />
+                      </Space>
+                      {userState.userInfo.hoTen}
+                    </span>
+                    <Space
+                      className="col-sm-12 col-md-6 col-xl-6"
+                      wrap
+                      style={{ justifyContent: "center" }}
+                    >
+                      <Button size="large" danger onClick={handleLogout}>
+                        Đăng xuất
+                      </Button>
                     </Space>
-                    {userState.userInfo.hoTen}
-                  </span>
-                  <Space wrap>
-                    <Button size="large" danger onClick={handleLogout}>
-                      Đăng xuất
-                    </Button>
-                  </Space>
-                </>
+                  </div>
+                </Fragment>
               ) : (
-                <>
-                  <Space wrap>
-                    <Button
-                      size="large"
-                      className="btn__register"
-                      danger
-                      type="text"
-                      onClick={() => navigate("/register")}
+                <Fragment className="container">
+                  <div className="row">
+                    <Space
+                      className="col-sm-12 col-md-6 col-xl-6"
+                      wrap
+                      style={{ justifyContent: "center" }}
                     >
-                      Đăng ký
-                    </Button>
-                  </Space>
-                  <Space wrap>
-                    <Button
-                      size="large"
-                      danger
-                      onClick={() => navigate("/login")}
+                      <Button
+                        size="large"
+                        className="btn__register"
+                        danger
+                        type="text"
+                        onClick={() => navigate("/register")}
+                      >
+                        Đăng ký
+                      </Button>
+                    </Space>
+                    <Space
+                      className="col-sm-12 col-md-6 col-xl-6"
+                      wrap
+                      style={{ justifyContent: "center" }}
                     >
-                      Đăng nhập
-                    </Button>
-                  </Space>
-                </>
+                      <Button
+                        size="large"
+                        danger
+                        onClick={() => navigate("/login")}
+                      >
+                        Đăng nhập
+                      </Button>
+                    </Space>
+                  </div>
+                </Fragment>
               )}
             </div>
           </div>

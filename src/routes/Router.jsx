@@ -48,8 +48,14 @@ export default function Router() {
           ],
         },
         {
-          path: "/register",
-          element: <Register />,
+          path: "/",
+          element: <NoAuthGuard />,
+          children: [
+            {
+              path: "/register",
+              element: <Register />,
+            },
+          ],
         },
       ],
     },

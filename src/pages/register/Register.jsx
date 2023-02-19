@@ -3,9 +3,9 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerApi } from "services/user";
 
-import { Space, Alert } from "antd";
-import { error } from "jquery";
+import { CloseOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+import { Space } from "antd";
 import { setRegisterInfoAction } from "store/actions/registerAction";
 
 export default function Register() {
@@ -78,6 +78,18 @@ export default function Register() {
   return (
     <div className="bg__login">
       <div className="center">
+        <Space onClick={() => navigate("/")}>
+          <CloseOutlined
+            className="text-white"
+            style={{
+              position: "absolute",
+              right: "16px",
+              fontSize: "20px",
+              cursor: "pointer",
+            }}
+          />
+        </Space>
+
         <h1>Register</h1>
         <form
           noValidate

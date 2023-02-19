@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 
 import "./stylelogin.css";
 
+import { CloseOutlined } from "@ant-design/icons";
+import { Space } from "antd";
+
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -41,6 +44,17 @@ export default function Login() {
   return (
     <div className="bg__login">
       <div className="center">
+        <Space onClick={() => navigate("/")}>
+          <CloseOutlined
+            className="text-white"
+            style={{
+              position: "absolute",
+              right: "16px",
+              fontSize: "20px",
+              cursor: "pointer",
+            }}
+          />
+        </Space>
         <h1>Login</h1>
         <form method="post" onSubmit={handleSubmit}>
           <div className="txt_field">

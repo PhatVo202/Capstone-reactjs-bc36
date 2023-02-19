@@ -70,7 +70,7 @@ export default function MovieList() {
               size="large"
               danger
             >
-              ĐẶT VÉ
+              Xem chi tiết
             </Button>
           </div>
         </div>

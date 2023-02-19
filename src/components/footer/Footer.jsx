@@ -28,7 +28,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="row">
-          <div className="col-4 footer__item ">
+          <div className="col-12 col-md-6 col-lg-4 col-xl-4 footer__item ">
             <address>
               <span>
                 NetFlix là dịch vụ được cung cấp bởi Công ty Cổ Phần NetFlix
@@ -44,9 +44,10 @@ export default function Footer() {
                 Ngày cấp mã số doanh nghiệp: 15/5/2014. Nơi cấp: Sở kế hoạch và
                 đầu tư thành phố Hà Nội.
               </span>
+              <img src="./img/certificate.png" alt="" width={200} height={70} />
             </address>
           </div>
-          <div className="col-2 footer__item p-2">
+          <div className="col-6 col-md-6 col-lg-2 col-xl-2 footer__item p-2">
             <h4>Giới thiệu</h4>
             <ul>
               <li>
@@ -60,7 +61,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="col-3 footer__item p-2">
+          <div className="col-6 col-md-6 col-lg-3 col-xl-3 footer__item p-2">
             <h4>Hỗ trợ</h4>
             <ul>
               <li>
@@ -74,7 +75,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="col-3 footer__item px-2">
+          <div className="col-12 col-md-6 col-lg-3 col-xl-3 footer__item px-2">
             <h4>Tải ứng dụng</h4>
             <div className="container-xl">
               <div className="row">
