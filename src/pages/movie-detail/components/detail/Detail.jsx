@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMovieDetailApi } from "../../../../services/movie";
-import moment from "moment";
+
 import { formatDate } from "../../../../utils";
+import { Rate } from "antd";
 
 export default function Detail() {
   const [movieDetail, setMovieDetail] = useState({});
@@ -16,7 +17,7 @@ export default function Detail() {
 
   const getMovieDetail = async () => {
     const result = await fetchMovieDetailApi(params.id);
-
+    console.log(result);
     setMovieDetail(result.data.content);
   };
 
@@ -29,6 +30,7 @@ export default function Detail() {
         <div className="col-9">
           <h4>{movieDetail.tenPhim}</h4>
           <p>{movieDetail.moTa}</p>
+          <Rate disabled defaultValue={5} />
           <p>{formatDate(movieDetail.ngayKhoiChieu)}</p>
           <div>
             <button className="btn btn-info mr-2">TRAILER</button>

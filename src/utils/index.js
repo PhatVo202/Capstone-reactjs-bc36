@@ -1,5 +1,9 @@
 import moment from "moment";
 
 export const formatDate = (date) => {
-  return moment(date).format("hh:mm A");
+  return moment(date).format("LLL");
+};
+
+export const formatTime = (date) => {
+  return moment(date).format("LT");
 };

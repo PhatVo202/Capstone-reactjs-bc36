@@ -19,7 +19,7 @@ export default function Register() {
     matKhau: "",
     email: "",
     soDt: "",
-    maNhom: "GP03",
+    maNhom: "GP02",
     hoTen: "",
   });
 
