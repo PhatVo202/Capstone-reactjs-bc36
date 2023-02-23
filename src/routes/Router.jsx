@@ -12,6 +12,7 @@ import Login from "pages/login/Login";
 import MovieDetail from "pages/movie-detail/MovieDetail";
 import MovieManagement from "pages/movie-management/MovieManagement";
 import Register from "pages/register/Register";
+import MovieForm from "pages/movie-form/MovieForm";
 
 export default function Router() {
   const routing = useRoutes([
@@ -68,8 +69,16 @@ export default function Router() {
           element: <AdminGuard />,
           children: [
             {
-              path: "/admin/movie-management",
+              path: "/admin/flims",
               element: <MovieManagement />,
+            },
+            {
+              path: "/admin/flims/addnew",
+              element: <MovieForm />,
+            },
+            {
+              path: "/admin/flims/edit/:id",
+              element: <MovieForm />,
             },
           ],
         },

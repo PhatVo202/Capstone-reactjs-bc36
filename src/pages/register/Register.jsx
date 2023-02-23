@@ -7,6 +7,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Space } from "antd";
 import { setRegisterInfoAction } from "store/actions/registerAction";
+import { MA_NHOM } from "constants";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Register() {
     matKhau: "",
     email: "",
     soDt: "",
-    maNhom: "GP02",
+    maNhom: MA_NHOM,
     hoTen: "",
   });
 
