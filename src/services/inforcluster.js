@@ -7,3 +7,10 @@ export const fetchInforClusterApi = (maRap) => {
     method: "GET",
   });
 };
+
+export const fetchInfoRapApi = () => {
+  return axiosRequest({
+    url: `/QuanLyRap/LayThongTinHeThongRap`,
+    method: "GET",
+  });
+};

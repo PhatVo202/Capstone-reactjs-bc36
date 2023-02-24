@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Cascader,
@@ -11,16 +11,48 @@ import {
   Select,
   Switch,
   TreeSelect,
+  notification,
 } from "antd";
-import { addMovieApi } from "services/movie";
+import { addMovieApi, editMovieApi, fetchMovieDetailApi } from "services/movie";
 import { MA_NHOM } from "constants";
+import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "antd/es/form/Form";
+import moment from "moment";
+
+import { wait } from "@testing-library/user-event/dist/utils";
 
 export default function MovieForm() {
+  const navigate = useNavigate();
+  const params = useParams();
+  const [form] = useForm();
   const [file, setFile] = useState("");
   const [imgPreview, setImgPreview] = useState("");
   const [componentSize, setComponentSize] = useState("default");
+
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
+  };
+
+  useEffect(() => {
+    if (params.id) {
+      getMovieDetails();
+    }
+  }, [params.id]);
+
+  const getMovieDetails = async () => {
+    const result = await fetchMovieDetailApi(params.id);
+
+    form.setFieldsValue({
+      tenPhim: result.data.content.tenPhim,
+      trailer: result.data.content.trailer,
+      moTa: result.data.content.moTa,
+      sapChieu: result.data.content.sapChieu,
+      dangChieu: result.data.content.dangChieu,
+      danhGia: result.data.content.danhGia,
+      ngayKhoiChieu: moment(result.data.content.ngayKhoiChieu),
+    });
+
+    setImgPreview(result.data.content.hinhAnh);
   };
 
   const handleFinish = async (values) => {
@@ -30,15 +62,27 @@ export default function MovieForm() {
 
     formData.append("tenPhim", values.tenPhim);
     formData.append("maNhom", MA_NHOM);
+    formData.append("trailer", values.trailer);
     formData.append("moTa", values.moTa);
     formData.append("ngayKhoiChieu", values.ngayKhoiChieu);
     formData.append("sapChieu", values.sapChieu);
     formData.append("dangChieu", values.dangChieu);
     formData.append("hot", values.hot);
     formData.append("danhGia", values.danhGia);
-    formData.append("File", file, file.name);
+    file && formData.append("File", file, file.name);
 
-    await addMovieApi(formData);
+    if (params.id) {
+      formData.append("maPhim", params.id);
+      await editMovieApi(formData);
+    } else {
+      await addMovieApi(formData);
+    }
+
+    notification.success({
+      message: params.id ? "Sửa phim thành công" : "Thêm phim thành công",
+    });
+
+    navigate("/admin/films");
   };
 
   const handleFile = (event) => {
@@ -72,6 +116,7 @@ export default function MovieForm() {
         hot: true,
         danhGia: 10,
       }}
+      form={form}
       onFinish={handleFinish}
       onValuesChange={onFormLayoutChange}
       size={componentSize}

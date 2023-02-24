@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   FileOutlined,
   PieChartOutlined,
@@ -17,23 +17,19 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+
 const items = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
+  getItem("User", "1", <UserOutlined />),
+  getItem("Films", "sub1", <PieChartOutlined />, [
+    getItem("Films", "3"),
+    getItem("Addnew", "4"),
   ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem("ShowTime", "5", <FileOutlined />),
 ];
 
 export const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -79,8 +75,8 @@ export const AdminLayout = () => {
               margin: "16px 0",
             }}
           >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            <Breadcrumb.Item>Films</Breadcrumb.Item>
+            <Breadcrumb.Item>Addnew</Breadcrumb.Item>
           </Breadcrumb>
           <div
             style={{

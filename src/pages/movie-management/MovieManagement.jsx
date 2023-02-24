@@ -1,9 +1,14 @@
 import React from "react";
 import { useMovieList } from "../../hooks/useMovieList";
 
-import { Button, Space, Table, Tag } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Button, notification, Space, Table, Tag } from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  CalendarOutlined,
+} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { deleteMovieApi } from "services/movie";
 
 export default function MovieManagement() {
   const movieList = useMovieList();
@@ -39,16 +44,38 @@ export default function MovieManagement() {
         return (
           <div className="d-flex">
             <Button
-              onClick={() => navigate(`/admin/flims/edit/:${text.maPhim}`)}
+              onClick={() => navigate(`/admin/films/edit/${text.maPhim}`)}
               size="small"
             >
               <Space>
                 <EditOutlined />
               </Space>
             </Button>
-            <Button size="small">
+            <Button
+              onClick={async () => {
+                try {
+                  await deleteMovieApi(text.maPhim);
+                  notification.success({
+                    message: "Xoá phim thành công",
+                  });
+                } catch (error) {
+                  notification.error({
+                    message: error.response.data.content,
+                  });
+                }
+              }}
+              size="small"
+            >
               <Space>
                 <DeleteOutlined />
+              </Space>
+            </Button>
+            <Button
+              onClick={() => navigate(`/admin/films/showtime/${text.maPhim}`)}
+              size="small"
+            >
+              <Space>
+                <CalendarOutlined />
               </Space>
             </Button>
           </div>
@@ -60,7 +87,7 @@ export default function MovieManagement() {
   return (
     <div>
       <Button
-        onClick={() => navigate("/admin/flims/addnew")}
+        onClick={() => navigate("/admin/films/addnew")}
         type="primary"
         size="large"
         className="mb-5"

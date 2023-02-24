@@ -22,3 +22,18 @@ export const addMovieApi = (data) => {
     data: data,
   });
 };
+
+export const editMovieApi = (data) => {
+  return axiosRequest({
+    url: `/QuanLyPhim/CapNhatPhimUpload`,
+    method: "POST",
+    data: data,
+  });
+};
+
+export const deleteMovieApi = (id) => {
+  return axiosRequest({
+    url: `/QuanLyPhim/XP?MaPhim=${id}`,
+    method: "DELETE",
+  });
+};
