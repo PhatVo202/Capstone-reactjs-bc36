@@ -14,3 +14,10 @@ export const fetchInfoRapApi = () => {
     method: "GET",
   });
 };
+
+export const fetchInfoCumRapApi = (rap) => {
+  return axiosRequest({
+    url: `/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${rap}`,
+    method: "GET",
+  });
+};

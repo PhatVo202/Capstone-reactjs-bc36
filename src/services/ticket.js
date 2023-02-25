@@ -16,3 +16,11 @@ export const bookTicketApi = (data) => {
     data: data,
   });
 };
+
+export const addCalenderMovieApi = (data) => {
+  return axiosRequest({
+    url: "/QuanLyDatVe/TaoLichChieu",
+    method: "POST",
+    data: data,
+  });
+};

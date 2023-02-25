@@ -6,7 +6,7 @@ import { setUserInfoAction } from "../../store/actions/userAction";
 import "./styleheader.css";
 
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Space, Button } from "antd";
+import { Avatar, Space, Button, Dropdown } from "antd";
 
 export default function Header() {
   const userState = useSelector((state) => state.userReducer);
@@ -18,6 +18,26 @@ export default function Header() {
     dispatch(setUserInfoAction(null));
     navigate("/");
   };
+
+  const items = [
+    {
+      label: (
+        <NavLink style={{ fontSize: "18px" }}>
+          <UserOutlined />
+          Profile
+        </NavLink>
+      ),
+      key: "1",
+    },
+    {
+      label: (
+        <Button size="middle" danger onClick={handleLogout}>
+          Đăng xuất
+        </Button>
+      ),
+      key: "2",
+    },
+  ];
 
   return (
     <div className="header__content">
@@ -71,21 +91,26 @@ export default function Header() {
               {userState.userInfo ? (
                 <Fragment className="container">
                   <div className="row" style={{ textAlign: "center" }}>
-                    <span className=" text-white col-sm-12 col-md-6 col-xl-6">
-                      <Space size={16} wrap>
-                        <Avatar icon={<UserOutlined />} />
-                      </Space>
-                      {userState.userInfo.hoTen}
+                    <span className=" text-white ">
+                      <Dropdown
+                        menu={{
+                          items,
+                        }}
+                        trigger={["click"]}
+                        placement="bottomRight"
+                        arrow
+                      >
+                        <a onClick={(e) => e.preventDefault()}>
+                          <Space size={16} wrap>
+                            <Avatar
+                              style={{ backgroundColor: "#87d068" }}
+                              icon={<UserOutlined />}
+                            />
+                            {userState.userInfo.hoTen}
+                          </Space>
+                        </a>
+                      </Dropdown>
                     </span>
-                    <Space
-                      className="col-sm-12 col-md-6 col-xl-6"
-                      wrap
-                      style={{ justifyContent: "center" }}
-                    >
-                      <Button size="large" danger onClick={handleLogout}>
-                        Đăng xuất
-                      </Button>
-                    </Space>
                   </div>
                 </Fragment>
               ) : (
@@ -97,7 +122,7 @@ export default function Header() {
                       style={{ justifyContent: "center" }}
                     >
                       <Button
-                        size="large"
+                        size="middle"
                         className="btn__register"
                         danger
                         type="text"
@@ -112,7 +137,7 @@ export default function Header() {
                       style={{ justifyContent: "center" }}
                     >
                       <Button
-                        size="large"
+                        size="middle"
                         danger
                         onClick={() => navigate("/login")}
                       >
