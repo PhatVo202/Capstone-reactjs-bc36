@@ -80,14 +80,20 @@ export default function PavilitonCluster() {
 
   return (
     <div className="container">
-      <div className="row">
-        <Tabs className="bg-white col-12 " tabPosition={"left"}>
+      <div>
+        <Tabs className="bg-white  " tabPosition={"left"}>
           {inforCluster?.map((item, index) => {
             return (
               <TabPane
                 tab={
                   <div>
-                    <img src={item.logo} alt="" width={50} height={50} />
+                    <img
+                      src={item.logo}
+                      alt=""
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
                   </div>
                 }
                 key={index}
@@ -97,17 +103,15 @@ export default function PavilitonCluster() {
                     return (
                       <TabPane
                         tab={
-                          <div>
+                          <div style={{ width: "300px", display: "flex" }}>
                             <img
                               src={item.hinhAnh}
                               alt=""
                               width={50}
                               height={50}
+                              className="rounded-full"
                             />
-                            <span style={{ fontSize: "14px" }}>
-                              {item.tenCumRap}
-                            </span>
-                            <p style={{ fontSize: "12px" }}>{item.diaChi}</p>
+                            {item.tenCumRap}
                           </div>
                         }
                         key={index}
@@ -122,6 +126,7 @@ export default function PavilitonCluster() {
                                     alt=""
                                     width={100}
                                     height={100}
+                                    className="rounded-full"
                                   />
                                   <div>
                                     <h4>{item.tenPhim}</h4>

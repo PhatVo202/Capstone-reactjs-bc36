@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../services/user";
 import { setUserInfoAction } from "../../store/actions/userAction";
+import Swal from "sweetalert2";
 
 import { Link } from "react-router-dom";
 
 import "./stylelogin.css";
 
 import { CloseOutlined } from "@ant-design/icons";
-import { notification, Space } from "antd";
+import { Space } from "antd";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -40,8 +41,12 @@ export default function Login() {
     localStorage.setItem("USER_INFO_KEY", JSON.stringify(result.data.content));
     dispatch(setUserInfoAction(result.data.content));
     if (userState.userInfo) {
-      notification.success({
-        message: "Đăng nhập thành công!",
+      Swal.fire({
+        title: "Đăng nhập thành công",
+        text: `Xin chào ${userState.userInfo.hoTen}`,
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
       });
     }
     navigate("/");

@@ -9,6 +9,8 @@ import { Space } from "antd";
 import { setRegisterInfoAction } from "store/actions/registerAction";
 import { MA_NHOM } from "constants";
 
+import Swal from "sweetalert2";
+
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -76,8 +78,12 @@ export default function Register() {
     );
     dispatch(setRegisterInfoAction(result.data.content));
     if (registerUserState.nd) {
-      notification.success({
-        message: "Đăng ký thành công!",
+      Swal.fire({
+        title: "Đăng ký thành công",
+        text: "Xin chào!!",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
       });
     }
 

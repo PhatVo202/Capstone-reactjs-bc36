@@ -17,7 +17,7 @@ export default function Detail() {
 
   const getMovieDetail = async () => {
     const result = await fetchMovieDetailApi(params.id);
-    console.log(result);
+
     setMovieDetail(result.data.content);
   };
 

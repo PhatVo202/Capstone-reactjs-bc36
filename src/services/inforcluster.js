@@ -1,9 +1,10 @@
 import { axiosRequest } from "configs/axios.config";
+import { MA_NHOM } from "constants";
 
 export const fetchInforClusterApi = (maRap) => {
   return axiosRequest({
     maHeThongRap: maRap,
-    url: `/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP02`,
+    url: `/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=${MA_NHOM}`,
     method: "GET",
   });
 };
