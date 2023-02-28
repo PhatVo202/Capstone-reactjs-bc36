@@ -14,6 +14,7 @@ import MovieManagement from "pages/movie-management/MovieManagement";
 import Register from "pages/register/Register";
 import MovieForm from "pages/movie-form/MovieForm";
 import MovieShowTime from "pages/movie-showtime/MovieShowTime";
+import Profile from "pages/profile/Profile";
 
 export default function Router() {
   const routing = useRoutes([
@@ -38,6 +39,10 @@ export default function Router() {
               element: <Booking />,
             },
           ],
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
         {
           path: "/",
