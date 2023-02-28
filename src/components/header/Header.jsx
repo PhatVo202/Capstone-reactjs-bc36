@@ -22,7 +22,7 @@ export default function Header() {
   const items = [
     {
       label: (
-        <NavLink style={{ fontSize: "18px" }}>
+        <NavLink to="/profile" style={{ fontSize: "18px" }}>
           <UserOutlined />
           Profile
         </NavLink>
