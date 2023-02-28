@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, DatePicker, Form, Input, Radio, Select } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  Radio,
+  Select,
+  Divider,
+  Space,
+  Tag,
+} from "antd";
 import { fetchMovieDetailApi } from "services/movie";
 import { useParams } from "react-router-dom";
 import { fetchInfoCumRapApi, fetchInfoRapApi } from "services/inforcluster";
@@ -82,8 +92,13 @@ export default function MovieShowTime() {
   return (
     <div>
       <div className="mb-4">
-        <h3>Tạo lịch chiếu - {state.tenPhim}</h3>
-        <img src={state.hinhAnh} alt="" width={208} height={300} />
+        <Space className="d-block">
+          <Tag color="#2db7f5">
+            <h3>Tạo lịch chiếu </h3>
+          </Tag>
+          <span>- {state.tenPhim}</span>
+          <img src={state.hinhAnh} alt="" width={208} height={300} />
+        </Space>
       </div>
       <div>
         <Form

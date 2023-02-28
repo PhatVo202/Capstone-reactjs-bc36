@@ -17,3 +17,11 @@ export const registerApi = (information) => {
     data: information,
   });
 };
+
+export const inforTkApi = (data) => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/ThongTinTaiKhoan`,
+    method: "POST",
+    data: data,
+  });
+};

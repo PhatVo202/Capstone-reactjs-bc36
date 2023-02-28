@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMovieList } from "../../hooks/useMovieList";
 
-import { Button, notification, Space, Table, Tag } from "antd";
+import { Button, notification, Space, Table, Input } from "antd";
+
 import {
   EditOutlined,
   DeleteOutlined,
@@ -13,6 +14,14 @@ import { deleteMovieApi } from "services/movie";
 export default function MovieManagement() {
   const movieList = useMovieList();
   const navigate = useNavigate();
+  console.log(movieList);
+
+  const [keyword, setKeyWord] = useState("");
+
+  const [filterData, setFilterData] = useState(null);
+
+  const { Search } = Input;
+  const onSearch = (value) => console.log(value);
 
   const columns = [
     {
@@ -84,6 +93,13 @@ export default function MovieManagement() {
     },
   ];
 
+  const search = (value) => {
+    let filterTable = movieList.filter((item) => {
+      return item.tenPhim.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
+    });
+    setFilterData(filterTable);
+  };
+
   return (
     <div>
       <Button
@@ -94,7 +110,18 @@ export default function MovieManagement() {
       >
         Thêm phim
       </Button>
-      <Table columns={columns} dataSource={movieList} />
+      <div>
+        <Input.Search
+          placeholder="Search here"
+          enterButton
+          onSearch={search}
+          onChange={(event) => setKeyWord(event.target.value)}
+        />
+        <Table
+          columns={columns}
+          dataSource={filterData === null ? movieList : filterData}
+        />
+      </div>
     </div>
   );
 }
