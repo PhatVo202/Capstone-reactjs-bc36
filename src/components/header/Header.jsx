@@ -33,10 +33,11 @@ export default function Header() {
       label: (
         <NavLink to="/admin/films" style={{ fontSize: "18px" }}>
           <SettingOutlined className="mr-1" />
-          {userState.userInfo.maLoaiNguoiDung}
+
+          {userState.userInfo && userState.userInfo.maLoaiNguoiDung}
         </NavLink>
       ),
-      key: "1",
+      key: "2",
     },
     {
       label: (
@@ -44,7 +45,7 @@ export default function Header() {
           Đăng xuất
         </Button>
       ),
-      key: "2",
+      key: "",
     },
   ];
 
