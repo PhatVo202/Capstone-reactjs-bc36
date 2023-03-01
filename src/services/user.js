@@ -24,3 +24,11 @@ export const inforTkApi = () => {
     method: "POST",
   });
 };
+
+export const updateApi = (data) => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/CapNhatThongTinNguoiDung`,
+    method: "PUT",
+    data: data,
+  });
+};

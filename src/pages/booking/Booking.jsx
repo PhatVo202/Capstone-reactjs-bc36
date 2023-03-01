@@ -20,8 +20,6 @@ export default function Booking() {
   const getTicketDetail = async () => {
     const result = await fetchTicketDetailApi(params.id);
 
-    console.log(result);
-
     setTicketDetail(result.data.content);
   };
 

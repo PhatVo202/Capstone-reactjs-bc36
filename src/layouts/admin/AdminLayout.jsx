@@ -17,7 +17,8 @@ import {
   Button,
 } from "antd";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfoAction } from "store/actions/userAction";
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -60,12 +61,20 @@ const items = [
 ];
 
 export const AdminLayout = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const stateUser = useSelector((state) => state.userReducer);
   const [collapsed, setCollapsed] = useState(false);
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const handleLogout = () => {
+    localStorage.removeItem("USER_INFO_KEY");
+    dispatch(setUserInfoAction(null));
+    navigate("/");
+  };
   return (
     <Layout
       style={{
@@ -101,24 +110,40 @@ export const AdminLayout = () => {
             {stateUser.userInfo && (
               <div style={{ textAlign: "right" }}>
                 <span>
-                  <Dropdown
-                    menu={{
-                      items,
-                    }}
-                    trigger={["click"]}
-                    placement="bottomRight"
-                    arrow
-                  >
-                    <a onClick={(e) => e.preventDefault()}>
-                      <Space size={16} wrap>
+                  <div className="btn-group">
+                    <a
+                      className="btn btn-secondary dropdown-toggle text-dark"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      style={{
+                        backgroundColor: "transparent",
+                        outline: "none",
+                        border: "none",
+                      }}
+                    >
+                      <Space className="mr-2">
                         <Avatar
                           style={{ backgroundColor: "#87d068" }}
                           icon={<UserOutlined />}
                         />
-                        {stateUser.userInfo.hoTen}
                       </Space>
+                      {stateUser.userInfo.hoTen}
                     </a>
-                  </Dropdown>
+
+                    <div className="dropdown-menu dropdown-menu-right text-center">
+                      <button
+                        onClick={() => navigate("/")}
+                        className="dropdown-item"
+                        type="button"
+                      >
+                        Home
+                      </button>
+                      <Button size="middle" danger onClick={handleLogout}>
+                        Đăng xuất
+                      </Button>
+                    </div>
+                  </div>
                 </span>
               </div>
             )}

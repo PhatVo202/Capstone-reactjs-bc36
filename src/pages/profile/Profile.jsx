@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Space, Tag, Button, Table } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import { Space, Tag, Button } from "antd";
 import { MA_NHOM } from "constants";
-import { inforTkApi } from "services/user";
+import { inforTkApi, updateApi } from "services/user";
+import { formatDate } from "utils";
 
 export default function Profile() {
+  const formRef = useRef(null);
   const [stateInfoTk, setStateInfoTk] = useState([]);
   const [stateValues, setStateValues] = useState({
     taiKhoan: "",
@@ -25,66 +27,72 @@ export default function Profile() {
     setStateInfoTk(result.data.content);
   };
 
-  const columns = [
-    // {
-    //   title: "STT",
-    //   dataIndex: "thongTinDatVe.length",
-    //   key: "1",
-    //   render: (text) => <a>{text}</a>,
-    // },
-    {
-      title: "Tên phim",
-      dataIndex: "thongTinDatVe.danhSachGhe.tenPhim",
-      key: "1",
-    },
-    {
-      title: "Thời lượng phim",
-      dataIndex: "thongTinDatVe.thoiLuongPhim",
-      key: "2",
-    },
-    {
-      title: "Tên rạp",
-      key: "3",
-      dataIndex: "thongTinDatVe.danhSachGhe.maCumRap",
-    },
-    {
-      title: "Ngày đặt",
-      key: "4",
-      dataIndex: "thongTinDatVe.ngayDat",
-    },
-    {
-      title: "Mã vé",
-      key: "5",
-      dataIndex: "thongTinDatVe.maVe",
-    },
-    {
-      title: "Tên ghế",
-      key: "6",
-      dataIndex: "thongTinDatVe.danhSachGhe.tenGhe",
-    },
-    {
-      title: "Giá vé",
-      key: "7",
-      dataIndex: "thongTinDatVe.giaVe",
-    },
-    {
-      title: "Tổng tiền",
-      key: "8",
-    },
-  ];
+  // const updateForm = async (data) => {
+  //   const result = await updateApi(data);
+  //   console.log(result);
+  // };
 
-  // const data = loading
-  //   ? "Loading..."
-  //   : stateInfoTk.map((item, index) => ({
-  //       key: index,
-  //       tenPhim: item.thongTinDatVe.danhSachGhe.tenPhim,
-  //       thoiLuongPhim: thongTinDatVe.thoiLuongPhim,
-  //       tenRap: thongTinDatVe.danhSachGhe.maCumRap,
-  //       ngayDat: thongTinDatVe.ngayDat,
-  //       maVe: thongTinDatVe.maVe,
-  //       tenGhe: thongTinDatVe.danhSachGhe.tenGhe,
-  //       giaVe: thongTinDatVe.giaVe,
-  //     }));
+  const renderContentTable = () => {
+    return stateInfoTk.thongTinDatVe?.map((item, index) => {
+      return (
+        <tr key={index}>
+          <td>{index + 1}</td>
+          <td>{item.tenPhim}</td>
+          <td>
+            <img src={item.hinhAnh} alt="" width={50} height={50} />
+          </td>
+          <td>{item.thoiLuongPhim}</td>
+          <td>
+            {item.danhSachGhe?.map((dsGhe, index) => {
+              return <span key={index}>{dsGhe.tenCumRap},</span>;
+            })}
+          </td>
+
+          <td>{formatDate(item.ngayDat)}</td>
+          <td>{item.maVe}</td>
+          <td>
+            {item.danhSachGhe?.map((dsGhe, index) => {
+              return <span key={index}>{dsGhe.tenGhe},</span>;
+            })}
+          </td>
+
+          <td>{item.giaVe.toLocaleString()} vnd</td>
+        </tr>
+      );
+    });
+  };
+
+  const updateForm = async (data) => {
+    await updateApi(data);
+    alert("Update success!!");
+  };
+
+  useEffect(() => {
+    if (stateInfoTk) {
+      setStateValues({
+        taiKhoan: stateInfoTk.taiKhoan,
+        matKhau: stateInfoTk.matKhau,
+        email: stateInfoTk.email,
+        soDt: stateInfoTk.soDT,
+        hoTen: stateInfoTk.hoTen,
+        maLoaiNguoiDung: stateInfoTk.maLoaiNguoiDung,
+        maNhom: stateInfoTk.maNhom,
+      });
+    }
+  }, [stateInfoTk]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log(event.target.value);
+
+    setStateValues({
+      ...stateValues,
+      [name]: value,
+    });
+  };
+
+  const { taiKhoan, matKhau, email, soDt, hoTen } = stateValues || {};
+
   return (
     <>
       <div className="container-xl my-5" style={{ overflowX: "hidden" }}>
@@ -98,7 +106,7 @@ export default function Profile() {
               height={200}
             />
             <p className="mt-3">{stateInfoTk.hoTen}</p>
-            <p className="text-primary">{stateInfoTk.maLoaiNguoiDung}</p>
+            <p className="text-primary"></p>
             <div className="mt-5">
               <p>Số lần đặt vé:</p>
               <p>Số vé đã đặt:</p>
@@ -112,39 +120,86 @@ export default function Profile() {
                 </Tag>
               </Space>
 
-              <div className="form-group container mt-4">
+              <form ref={formRef} className="form-group container mt-4">
                 <div className="row">
                   <div className="col-6">
                     <label>Tài khoản:</label>
-                    <input type="text" name id className="form-control w-100" />
+                    <input
+                      type="text"
+                      name="taiKhoan"
+                      value={taiKhoan}
+                      onChange={(event) => handleChange(event)}
+                      className="form-control w-100"
+                    />
                   </div>
                   <div className="col-6">
                     <label>Số điện thoại:</label>
-                    <input type="text" name id className="form-control w-100" />
+                    <input
+                      type="text"
+                      name="soDt"
+                      value={soDt}
+                      onChange={(event) => handleChange(event)}
+                      className="form-control w-100"
+                    />
                   </div>
                   <div className="col-6">
                     <label>Mật khẩu:</label>
-                    <input type="text" name id className="form-control w-100" />
+                    <input
+                      type="text"
+                      name="matKhau"
+                      value={matKhau}
+                      onChange={(event) => handleChange(event)}
+                      className="form-control w-100"
+                    />
                   </div>
                   <div className="col-6">
                     <label>Họ tên:</label>
-                    <input type="text" name id className="form-control w-100" />
+                    <input
+                      type="text"
+                      name="hoTen"
+                      value={hoTen}
+                      onChange={(event) => handleChange(event)}
+                      className="form-control w-100"
+                    />
                   </div>
                   <div className="col-6">
                     <label>Email:</label>
-                    <input type="text" name id className="form-control w-100" />
+                    <input
+                      type="text"
+                      name="email"
+                      value={email}
+                      onChange={(event) => handleChange(event)}
+                      className="form-control w-100"
+                    />
                   </div>
                   <div className="col-12 mt-4">
                     <Space wrap>
-                      <Button>Cập nhật</Button>
+                      <Button onClick={() => updateForm(stateValues)}>
+                        Cập nhật
+                      </Button>
                     </Space>
                   </div>
                 </div>
-              </div>
+              </form>
 
-              <div>
+              <div className="container">
                 <h4 className="text-primary">Lịch sử đặt vé</h4>
-                <Table columns={columns} dataSource="" />
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên phim</th>
+                      <th>Hình ảnh</th>
+                      <th>Thời lượng phim</th>
+                      <th>Tên rạp</th>
+                      <th>Ngày đặt</th>
+                      <th>Mã vé</th>
+                      <th>Tên ghế</th>
+                      <th>Tổng tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderContentTable()}</tbody>
+                </table>
               </div>
             </div>
           </div>

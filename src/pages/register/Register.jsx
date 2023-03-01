@@ -1,5 +1,5 @@
 import { Button, notification } from "antd";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerApi } from "services/user";
 
@@ -22,7 +22,7 @@ export default function Register() {
     matKhau: "",
     email: "",
     soDt: "",
-    maNhom: MA_NHOM,
+    maNhom: "GP03",
     hoTen: "",
   });
 
@@ -31,7 +31,7 @@ export default function Register() {
     matKhau: "",
     email: "",
     soDt: "",
-    maNhom: "",
+    maNhom: "GP03",
     hoTen: "",
   });
 

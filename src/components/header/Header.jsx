@@ -5,7 +5,7 @@ import { setUserInfoAction } from "../../store/actions/userAction";
 
 import "./styleheader.css";
 
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 import { Avatar, Space, Button, Dropdown } from "antd";
 
 export default function Header() {
@@ -23,8 +23,17 @@ export default function Header() {
     {
       label: (
         <NavLink to="/profile" style={{ fontSize: "18px" }}>
-          <UserOutlined />
+          <UserOutlined className="mr-1" />
           Profile
+        </NavLink>
+      ),
+      key: "1",
+    },
+    {
+      label: (
+        <NavLink to="/admin/films" style={{ fontSize: "18px" }}>
+          <SettingOutlined className="mr-1" />
+          {userState.userInfo.maLoaiNguoiDung}
         </NavLink>
       ),
       key: "1",
