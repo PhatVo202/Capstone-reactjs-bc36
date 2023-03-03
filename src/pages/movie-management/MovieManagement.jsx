@@ -14,14 +14,12 @@ import { deleteMovieApi } from "services/movie";
 export default function MovieManagement() {
   const movieList = useMovieList();
   const navigate = useNavigate();
+
   console.log(movieList);
 
   const [keyword, setKeyWord] = useState("");
 
   const [filterData, setFilterData] = useState(null);
-
-  const { Search } = Input;
-  const onSearch = (value) => console.log(value);
 
   const columns = [
     {

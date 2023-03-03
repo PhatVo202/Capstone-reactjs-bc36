@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, TOKEN_CYBERSOFT } from "../constants";
+import { BASE_URL, MA_NHOM, TOKEN_CYBERSOFT } from "../constants";
 import { axiosRequest } from "../configs/axios.config";
 
 export const loginApi = (information) => {
@@ -30,5 +30,12 @@ export const updateApi = (data) => {
     url: `/QuanLyNguoiDung/CapNhatThongTinNguoiDung`,
     method: "PUT",
     data: data,
+  });
+};
+
+export const getUserListApi = () => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${MA_NHOM}`,
+    method: "GET",
   });
 };

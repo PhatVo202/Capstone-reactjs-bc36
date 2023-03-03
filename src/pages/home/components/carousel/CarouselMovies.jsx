@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Carousel, Space, Button, Modal } from "antd";
+import { Space } from "antd";
 import { fetchBannerCarouselListApi } from "services/carouselbanner";
 
 import { CloseOutlined } from "@ant-design/icons";
@@ -12,8 +12,6 @@ const contentStyle = {
 };
 
 export default function CarouselMovies() {
-  const onChange = (currentSlide) => {};
-
   const [bannerList, setBannerList] = useState([]);
 
   useEffect(() => {

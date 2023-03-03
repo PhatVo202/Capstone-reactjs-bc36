@@ -15,6 +15,7 @@ import Register from "pages/register/Register";
 import MovieForm from "pages/movie-form/MovieForm";
 import MovieShowTime from "pages/movie-showtime/MovieShowTime";
 import Profile from "pages/profile/Profile";
+import UserList from "pages/userlist/UserList";
 
 export default function Router() {
   const routing = useRoutes([
@@ -70,6 +71,10 @@ export default function Router() {
       path: "/admin",
       element: <AdminLayout />,
       children: [
+        {
+          path: "/admin/userlist",
+          element: <UserList />,
+        },
         {
           path: "/admin",
           element: <AdminGuard />,

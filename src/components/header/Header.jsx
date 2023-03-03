@@ -24,7 +24,7 @@ export default function Header() {
       label: (
         <NavLink to="/profile" style={{ fontSize: "18px" }}>
           <UserOutlined className="mr-1" />
-          Profile
+          Thông tin cá nhân
         </NavLink>
       ),
       key: "1",

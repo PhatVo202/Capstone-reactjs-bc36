@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Space, Tag, Button } from "antd";
 import { MA_NHOM } from "constants";
 import { inforTkApi, updateApi } from "services/user";
 import { formatDate } from "utils";
+import Swal from "sweetalert2";
+import { LoadingContext } from "contexts/loading/LoadingContext";
 
 export default function Profile() {
   const formRef = useRef(null);
+  const [laodingState, setLoadingState] = useContext(LoadingContext);
   const [stateInfoTk, setStateInfoTk] = useState([]);
   const [stateValues, setStateValues] = useState({
     taiKhoan: "",
@@ -22,9 +25,11 @@ export default function Profile() {
   }, []);
 
   const getInforTk = async () => {
+    setLoadingState({ isLoading: true });
     const result = await inforTkApi();
     console.log(result);
     setStateInfoTk(result.data.content);
+    setLoadingState({ isLoading: false });
   };
 
   // const updateForm = async (data) => {
@@ -64,7 +69,14 @@ export default function Profile() {
 
   const updateForm = async (data) => {
     await updateApi(data);
-    alert("Update success!!");
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Cập nhật thành công",
+      showConfirmButton: false,
+      confirmButtonText: "Ok",
+      timer: 1500,
+    });
   };
 
   useEffect(() => {

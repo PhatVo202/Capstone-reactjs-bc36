@@ -6,6 +6,7 @@ import { Tabs, Select } from "antd";
 import { formatDate } from "utils";
 
 import { NavLink } from "react-router-dom";
+import { height } from "@mui/system";
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -81,7 +82,11 @@ export default function PavilitonCluster() {
   return (
     <div className="container">
       <div>
-        <Tabs className="bg-white  " tabPosition={"left"}>
+        <Tabs
+          className="bg-white  "
+          tabPosition={"left"}
+          style={{ height: "auto" }}
+        >
           {inforCluster?.map((item, index) => {
             return (
               <TabPane
