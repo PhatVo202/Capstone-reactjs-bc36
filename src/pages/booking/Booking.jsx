@@ -4,14 +4,17 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { bookTicketApi, fetchTicketDetailApi } from "../../services/ticket";
 import Seat from "./components/Seat";
-import * as _ from "lodash";
+import * as _ from "lodash"; // thư viện lodash
 
 export default function Booking() {
+// sau khi đặt vé thành công sẽ navigate
+  const navigate = useNavigate();
+
   const [ticketDetail, setTicketDetail] = useState({});
   const [selectedSeatList, setSelectedSeatList] = useState([]);
 
   const params = useParams();
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     getTicketDetail();
@@ -23,6 +26,7 @@ export default function Booking() {
     setTicketDetail(result.data.content);
   };
 
+// render danh sách ghế
   const renderSeats = () => {
     return ticketDetail?.danhSachGhe?.map((ele, idx) => {
       return (
@@ -52,6 +56,7 @@ export default function Booking() {
     console.log(selectedSeatList);
   }, [selectedSeatList]);
 
+//booking
   const bookTicket = async () => {
     const data = {
       maLichChieu: params.id,
@@ -65,6 +70,7 @@ export default function Booking() {
 
     await bookTicketApi(data);
     alert("Đặt vé thành công");
+  // navigate sang trang HOME
     navigate("/");
   };
 
