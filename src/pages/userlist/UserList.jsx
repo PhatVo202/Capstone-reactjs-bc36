@@ -1,11 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Space, Tag, Table } from "antd";
-import { getUserListApi } from "services/user";
+import { Space, Tag, Table, Button, Input } from "antd";
+import { getUserListApi, searchUserListApi } from "services/user";
 import { LoadingContext } from "contexts/loading/LoadingContext";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 export default function UserList() {
+  const navigate = useNavigate();
   const [_, setLoadingState] = useContext(LoadingContext);
   const [userList, setUserList] = useState([]);
+
+  const [keyword, setKeyWord] = useState("");
+  const [filterData, setFilterData] = useState(null);
 
   useEffect(() => {
     getUserList();
@@ -14,17 +20,12 @@ export default function UserList() {
   const getUserList = async () => {
     setLoadingState({ isLoading: true });
     const result = await getUserListApi();
-    console.log(result);
-    setUserList(result);
+
+    setUserList(result.data.content);
     setLoadingState({ isLoading: false });
   };
 
   const columns = [
-    {
-      title: "STT",
-      key: "0",
-      render: () => <p>1</p>,
-    },
     {
       title: "Tài khoản",
       dataIndex: "taiKhoan",
@@ -59,8 +60,30 @@ export default function UserList() {
     {
       title: "Thao tác",
       key: "7",
+      render: (text) => {
+        return (
+          <div>
+            <Button onClick={() => navigate("/admin/adduser")} size="small">
+              <Space>
+                <EditOutlined />
+              </Space>
+            </Button>
+
+            <Button size="small">
+              <Space>
+                <DeleteOutlined />
+              </Space>
+            </Button>
+          </div>
+        );
+      },
     },
   ];
+
+  const handleSearch = async () => {
+    const dataKey = await searchUserListApi(keyword);
+    setFilterData(dataKey.data.content);
+  };
 
   return (
     <div>
@@ -69,8 +92,18 @@ export default function UserList() {
           <h4>Danh sách User</h4>
         </Tag>
       </Space>
-      <div>
-        <Table columns={columns} dataSource="" />
+      <div className="mt-3">
+        <Input.Search
+          placeholder="Search here"
+          enterButton
+          className="mb-3"
+          onSearch={handleSearch}
+          onChange={(event) => setKeyWord(event.target.value)}
+        />
+        <Table
+          columns={columns}
+          dataSource={filterData === null ? userList : filterData}
+        />
       </div>
     </div>
   );

@@ -15,8 +15,6 @@ export default function MovieManagement() {
   const movieList = useMovieList();
   const navigate = useNavigate();
 
-  console.log(movieList);
-
   const [keyword, setKeyWord] = useState("");
 
   const [filterData, setFilterData] = useState(null);
@@ -91,10 +89,11 @@ export default function MovieManagement() {
     },
   ];
 
-  const search = (value) => {
+  const handleSearch = () => {
     let filterTable = movieList.filter((item) => {
       return item.tenPhim.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
     });
+
     setFilterData(filterTable);
   };
 
@@ -112,7 +111,7 @@ export default function MovieManagement() {
         <Input.Search
           placeholder="Search here"
           enterButton
-          onSearch={search}
+          onSearch={handleSearch}
           onChange={(event) => setKeyWord(event.target.value)}
         />
         <Table

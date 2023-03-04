@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Space, Tag, Button } from "antd";
+import { Space, Tag, Button, Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { MA_NHOM } from "constants";
 import { inforTkApi, updateApi } from "services/user";
 import { formatDate } from "utils";
@@ -110,19 +111,23 @@ export default function Profile() {
       <div className="container-xl my-5" style={{ overflowX: "hidden" }}>
         <div className="row">
           <div className="col-3 text-center">
-            <img
-              className="pt-5"
-              src="./img/bgAuth.jpg"
-              alt=""
-              width={200}
-              height={200}
-            />
+            <Space className="mt-5">
+              <Avatar
+                style={{
+                  backgroundColor: "#87d068",
+                  width: "150px",
+                  height: "150px",
+                }}
+                icon={
+                  <UserOutlined
+                    className="text-center"
+                    style={{ lineHeight: "150px", fontSize: "30px" }}
+                  />
+                }
+              />
+            </Space>
             <p className="mt-3">{stateInfoTk.hoTen}</p>
             <p className="text-primary"></p>
-            <div className="mt-5">
-              <p>Số lần đặt vé:</p>
-              <p>Số vé đã đặt:</p>
-            </div>
           </div>
           <div className="col-9 ">
             <div>

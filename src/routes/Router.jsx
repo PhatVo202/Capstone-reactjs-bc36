@@ -16,6 +16,7 @@ import MovieForm from "pages/movie-form/MovieForm";
 import MovieShowTime from "pages/movie-showtime/MovieShowTime";
 import Profile from "pages/profile/Profile";
 import UserList from "pages/userlist/UserList";
+import UserForm from "pages/use-form/UserForm";
 
 export default function Router() {
   const routing = useRoutes([
@@ -28,7 +29,7 @@ export default function Router() {
           element: <HomePage />,
         },
         {
-          path: "/movie-detail/:id",// id: mã phim
+          path: "/movie-detail/:id", // id: mã phim
           element: <MovieDetail />,
         },
         {
@@ -36,7 +37,7 @@ export default function Router() {
           element: <AuthGuard />,
           children: [
             {
-              path: "/booking/:id",// id: mã lịch chiếu
+              path: "/booking/:id", // id: mã lịch chiếu
               element: <Booking />,
             },
           ],
@@ -72,13 +73,17 @@ export default function Router() {
       element: <AdminLayout />,
       children: [
         {
-          path: "/admin/userlist",
-          element: <UserList />,
-        },
-        {
           path: "/admin",
           element: <AdminGuard />,
           children: [
+            {
+              path: "/admin/userlist",
+              element: <UserList />,
+            },
+            {
+              path: "/admin/adduser",
+              element: <UserForm />,
+            },
             {
               path: "/admin/films",
               element: <MovieManagement />,

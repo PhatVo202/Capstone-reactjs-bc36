@@ -30,7 +30,13 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem("User", "1", <UserOutlined />),
+  getItem(
+    "User",
+    "1",
+    <NavLink to="/admin/userlist">
+      <UserOutlined />
+    </NavLink>
+  ),
   getItem(
     "Films",
     "sub1",

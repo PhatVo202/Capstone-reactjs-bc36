@@ -8,10 +8,8 @@ export default function MovieDetail() {
   return (
     <div className="py-5 bg__detail">
       <div className=" container mt-5">
-        <div className="row">
-          <Detail />
-          <Showtimes />
-        </div>
+        <Detail />
+        <Showtimes />
       </div>
     </div>
   );

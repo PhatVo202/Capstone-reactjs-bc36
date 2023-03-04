@@ -31,7 +31,7 @@ export default function Header() {
     },
     {
       label: (
-        <NavLink to="/admin/films" style={{ fontSize: "18px" }}>
+        <NavLink to="/admin/userlist" style={{ fontSize: "18px" }}>
           <SettingOutlined className="mr-1" />
 
           {userState.userInfo && userState.userInfo.maLoaiNguoiDung}
@@ -97,10 +97,10 @@ export default function Header() {
                 </NavLink>
               </li>
             </ul>
-            <div className="mr-4">
+            <div>
               {userState.userInfo ? (
                 <Fragment className="container">
-                  <div className="row" style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: "center" }}>
                     <span className=" text-white ">
                       <Dropdown
                         menu={{

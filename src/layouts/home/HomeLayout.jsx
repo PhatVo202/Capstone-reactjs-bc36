@@ -1,3 +1,4 @@
+import BackToTop from "components/backtotop/BackToTop";
 import React from "react";
 
 import { Outlet } from "react-router-dom";
@@ -12,6 +13,7 @@ export default function HomeLayout() {
       <Header />
       <Outlet />
       <Footer />
+      <BackToTop />
     </>
   );
 }

@@ -39,3 +39,17 @@ export const getUserListApi = () => {
     method: "GET",
   });
 };
+
+export const searchUserListApi = (tuKhoa) => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${MA_NHOM}&tuKhoa=${tuKhoa}`,
+    method: "GET",
+  });
+};
+
+export const addUserApi = () => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/ThemNguoiDung`,
+    method: "POST",
+  });
+};
