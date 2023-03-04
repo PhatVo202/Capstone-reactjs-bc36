@@ -9,6 +9,7 @@ export const fetchTicketDetailApi = (id) => {
   });
 };
 
+// call api, đặt vé
 export const bookTicketApi = (data) => {
   return axiosRequest({
     url: "/QuanLyDatVe/DatVe",

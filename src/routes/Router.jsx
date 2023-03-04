@@ -28,7 +28,7 @@ export default function Router() {
           element: <HomePage />,
         },
         {
-          path: "/movie-detail/:id",
+          path: "/movie-detail/:id",// id: mã phim
           element: <MovieDetail />,
         },
         {
@@ -36,7 +36,7 @@ export default function Router() {
           element: <AuthGuard />,
           children: [
             {
-              path: "/booking/:id",
+              path: "/booking/:id",// id: mã lịch chiếu
               element: <Booking />,
             },
           ],

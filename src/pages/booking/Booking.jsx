@@ -126,3 +126,4 @@ export default function Booking() {
     </div>
   );
 }
+//.toLocaleString(): format dạng tiền tệ
