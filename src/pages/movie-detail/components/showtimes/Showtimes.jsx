@@ -11,8 +11,11 @@ import { Tabs, Space, Tag } from "antd";
 const { TabPane } = Tabs;
 
 export default function Showtimes() {
-  const [movieShowtimes, setMovieShowtimes] = useState({});
+ //lấy params trên url
   const params = useParams();
+
+  const [movieShowtimes, setMovieShowtimes] = useState({});
+  
 
   useEffect(() => {
     getMovieShowtimes();
