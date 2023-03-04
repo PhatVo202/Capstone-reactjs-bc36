@@ -21,6 +21,11 @@ export default function UserList() {
 
   const columns = [
     {
+      title: "STT",
+      key: "0",
+      render: () => <p>1</p>,
+    },
+    {
       title: "Tài khoản",
       dataIndex: "taiKhoan",
       key: "1",
