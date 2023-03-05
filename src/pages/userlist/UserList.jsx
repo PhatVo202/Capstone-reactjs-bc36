@@ -63,7 +63,13 @@ export default function UserList() {
       render: (text) => {
         return (
           <div>
-            <Button onClick={() => navigate("/admin/adduser")} size="small">
+            <Button
+              onClick={(text) => {
+                console.log(text);
+                navigate("/admin/adduser");
+              }}
+              size="small"
+            >
               <Space>
                 <EditOutlined />
               </Space>

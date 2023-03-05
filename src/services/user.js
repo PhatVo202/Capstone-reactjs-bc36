@@ -47,9 +47,25 @@ export const searchUserListApi = (tuKhoa) => {
   });
 };
 
-export const addUserApi = () => {
+export const fetchListTypeUserApi = () => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/LayDanhSachLoaiNguoiDung`,
+    method: "GET",
+  });
+};
+
+export const addUserApi = (data) => {
   return axiosRequest({
     url: `/QuanLyNguoiDung/ThemNguoiDung`,
     method: "POST",
+    data: data,
+  });
+};
+
+export const updateUserApi = (data) => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/CapNhatThongTinNguoiDung`,
+    method: "POST",
+    data: data,
   });
 };

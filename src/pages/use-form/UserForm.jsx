@@ -1,52 +1,127 @@
-import React from "react";
+import { MA_NHOM } from "constants";
+import React, { Fragment, useEffect, useState } from "react";
+import { fetchListTypeUserApi } from "services/user";
 
 export default function UserForm() {
+  const [typeUser, setTypeUser] = useState([]);
+  const [values, setValues] = useState({
+    taiKhoan: "",
+    matKhau: "",
+    email: "",
+    soDt: "",
+    maNhom: MA_NHOM,
+    maLoaiNguoiDung: "",
+    hoTen: "",
+  });
+
+  useEffect(() => {
+    getListTypeUser();
+  }, []);
+
+  const getListTypeUser = async () => {
+    const result = await fetchListTypeUserApi();
+    setTypeUser(result.data.content);
+  };
+
+  const renderMaLoaiNguoiDung = () => {
+    return typeUser.map((item, index) => {
+      return <option key={index}>{item.maLoaiNguoiDung}</option>;
+    });
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const handleBlur = (event) => {
+    console.log(event.target);
+  };
+
   return (
     <div>
-      <h1>Them nguoi dung</h1>
+      <h1>Thêm người dùng</h1>
       <form action="" className="container-xl">
         <div className="row">
           <div className="col-6">
             <div className="form-group w-100">
-              <label> Tai khoan</label>
-              <input type="text" className="form-control" />
+              <label>Tài khoản</label>
+              <input
+                type="text"
+                className="form-control"
+                name="taiKhoan"
+                onChange={(event) => handleChange(event)}
+                onBlur={(event) => handleBlur(event)}
+              />
             </div>
           </div>
           <div className="col-6">
             <div className="form-group w-100">
-              <label> So dien thoai</label>
-              <input type="text" className="form-control" />
+              <label>Số điện thoại</label>
+              <input
+                type="text"
+                className="form-control"
+                name="soDt"
+                onChange={(event) => handleChange(event)}
+                onBlur={(event) => handleBlur(event)}
+              />
             </div>
           </div>
           <div className="col-6">
             <div className="form-group w-100">
-              <label>Mat khau</label>
-              <input type="text" className="form-control" />
+              <label>Mật khẩu</label>
+              <input
+                type="text"
+                className="form-control"
+                name="matKhau"
+                onChange={(event) => handleChange(event)}
+                onBlur={(event) => handleBlur(event)}
+              />
             </div>
           </div>
           <div className="col-6">
             <div className="form-group w-100">
-              <label>Ho ten</label>
-              <input type="text" className="form-control" />
+              <label>Họ tên</label>
+              <input
+                type="text"
+                className="form-control"
+                name="hoTen"
+                onChange={(event) => handleChange(event)}
+                onBlur={(event) => handleBlur(event)}
+              />
             </div>
           </div>
           <div className="col-6">
             <div className="form-group w-100">
               <label>Email</label>
-              <input type="text" className="form-control" />
+              <input
+                type="text"
+                className="form-control"
+                name="email"
+                onChange={(event) => handleChange(event)}
+                onBlur={(event) => handleBlur(event)}
+              />
             </div>
           </div>
           <div className="col-6">
             <div className="form-group w-100">
-              <label>Ma loai nguoi dung</label>
-              <select id="inputState" class="form-control">
-                <option selected>Khachhang</option>
-                <option>Quantri</option>
+              <label>Mã loại người dùng</label>
+              <select
+                class="form-control"
+                name="maLoaiNguoiDung"
+                onChange={(event) => handleChange(event)}
+                onBlur={(event) => handleBlur(event)}
+              >
+                {renderMaLoaiNguoiDung()}
               </select>
             </div>
           </div>
-          <div>
-            <button className="btn btn-success">Them</button>
+          <div className="col-12 text-right">
+            <button className="btn btn-success mr-2">Thêm</button>
+            <button className="btn btn-primary">Cập nhật</button>
           </div>
         </div>
       </form>
