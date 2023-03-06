@@ -2,14 +2,16 @@ import React, { Fragment, useEffect, useState } from "react";
 import { fetchInforClusterApi } from "services/inforcluster";
 import { fetchSystemClusterApi } from "services/systemcluster";
 
-import { Tabs, Select } from "antd";
-import { formatDate } from "utils";
+import { Tabs, Select, Tag, Space, Collapse } from "antd";
+import { formatDate, formatTime } from "utils";
 
 import { NavLink } from "react-router-dom";
 import { height } from "@mui/system";
+import { useMediaQuery } from "react-responsive";
 
 const { TabPane } = Tabs;
 const { Option } = Select;
+const { Panel } = Collapse;
 
 export default function PavilitonCluster() {
   const [systemCluster, setSystemCluster] = useState([]);
@@ -34,134 +36,207 @@ export default function PavilitonCluster() {
     setInforCluster(result.data.content);
   };
 
-  const renderTab = () => {
-    return systemCluster?.map((item, index) => {
-      return (
-        <a
-          key={index}
-          className={`nav-link ${index === 0 && "active"}`}
-          data-toggle="pill"
-          href={`#${item.maHeThongRap}`}
-          role="tab"
-          aria-selected="true"
-        >
-          <img src={item.logo} alt="" width={60} height={60} />
-        </a>
-      );
-    });
-  };
+  const isMobile = useMediaQuery({ query: `(max-width: 845px)` });
+  const isDesktop = useMediaQuery({ query: `(min-width: 846px)` });
 
-  const renderInforCluster = () => {
-    return inforCluster?.map((item, index) => {
-      return (
-        <div
-          key={index}
-          className={`tab-pane fade show ${index === 0 && "active"}`}
-          id={item.maHeThongRap}
-          role="tabpanel"
-          aria-labelledby="v-pills-home-tab"
-        >
-          {item?.lstCumRap?.map((item, index) => {
-            return (
-              <div key={index}>
-                <div className="d-flex mb-3">
-                  <img src={item.hinhAnh} alt="" width={50} height={50} />
-                  <div>
-                    <p style={{ color: "white" }}>{item.tenCumRap}</p>
-                    <p className="text-white">{item.diaChi}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      );
-    });
+  const StyleFilms = {
+    height: "500px",
+    overflowY: "scroll",
   };
 
   return (
-    <div className="container">
+    <div className={isMobile ? "container-md" : "container"}>
       <div>
         <Tabs
-          className="bg-white  "
-          tabPosition={"left"}
-          style={{ height: "auto" }}
+          tabPosition={isMobile ? "top" : "left"}
+          defaultActiveKey="1"
+          style={
+            isMobile
+              ? {
+                  height: "500px",
+                  backgroundColor: "white",
+                  overflowY: "scroll",
+                }
+              : { height: "800px", backgroundColor: "white" }
+          }
         >
-          {inforCluster?.map((item, index) => {
+          {inforCluster?.map((systemRap, index) => {
             return (
               <TabPane
+                style={isMobile && StyleFilms}
                 tab={
                   <div>
-                    <img
-                      src={item.logo}
-                      alt=""
-                      width={50}
-                      height={50}
-                      className="rounded-full"
-                    />
+                    <img src={systemRap.logo} alt="" width={50} height={50} />
                   </div>
                 }
                 key={index}
               >
-                <Tabs tabPosition="left">
-                  {item.lstCumRap?.map((item, index) => {
+                {isMobile &&
+                  systemRap.lstCumRap?.map((item, index) => {
                     return (
-                      <TabPane
-                        tab={
-                          <div style={{ width: "300px", display: "flex" }}>
-                            <img
-                              src={item.hinhAnh}
-                              alt=""
-                              width={50}
-                              height={50}
-                              className="rounded-full"
-                            />
-                            {item.tenCumRap}
-                          </div>
-                        }
+                      <Collapse
+                        accordion={true}
                         key={index}
+                        expandIconPosition="right"
                       >
-                        {item.danhSachPhim?.map((item, index) => {
-                          return (
-                            <Fragment key={index}>
-                              <div className="my-5">
-                                <div>
-                                  <img
-                                    src={item.hinhAnh}
-                                    alt=""
-                                    width={100}
-                                    height={100}
-                                    className="rounded-full"
-                                  />
-                                  <div>
-                                    <h4>{item.tenPhim}</h4>
-                                    <div>
-                                      {item.lstLichChieuTheoPhim?.map(
-                                        (item, index) => {
-                                          return (
+                        <Panel
+                          header={
+                            <div style={{ display: "flex" }}>
+                              <img
+                                src={item.hinhAnh}
+                                alt=""
+                                width={50}
+                                height={50}
+                              />
+                              <div className="ml-3">
+                                <p className="mb-0">{item.tenCumRap}</p>
+                                <p>{item.diaChi}</p>
+                              </div>
+                            </div>
+                          }
+                          key={index}
+                        >
+                          {item.danhSachPhim?.map((dsPhim, index) => {
+                            return (
+                              <Collapse
+                                style={{ overflowY: "scroll" }}
+                                key={index}
+                                expandIconPosition="right"
+                              >
+                                <Panel
+                                  showArrow={false}
+                                  header={
+                                    <div style={{ display: "flex" }}>
+                                      <img
+                                        src={dsPhim.hinhAnh}
+                                        alt=""
+                                        width={50}
+                                        height={50}
+                                      />
+                                      <p>{dsPhim.tenPhim}</p>
+                                    </div>
+                                  }
+                                  key={index}
+                                >
+                                  {dsPhim.lstLichChieuTheoPhim?.map(
+                                    (xuatChieu, index) => {
+                                      return (
+                                        <Space>
+                                          <Tag color="gold" className="mb-2">
                                             <NavLink
-                                              className="mr-2"
-                                              to={`/booking/${item.maLichChieu}`}
+                                              style={{ textDecoration: "none" }}
                                               key={index}
+                                              to={`/booking/${xuatChieu.maLichChieu}`}
                                             >
-                                              {formatDate(
-                                                item.ngayChieuGioChieu
+                                              {formatTime(
+                                                xuatChieu.ngayChieuGioChieu
                                               )}
                                             </NavLink>
-                                          );
-                                        }
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </Fragment>
-                          );
-                        })}
-                      </TabPane>
+                                          </Tag>
+                                        </Space>
+                                      );
+                                    }
+                                  )}
+                                </Panel>
+                              </Collapse>
+                            );
+                          })}
+                        </Panel>
+                      </Collapse>
                     );
                   })}
-                </Tabs>
+                {isDesktop && (
+                  <Tabs
+                    defaultActiveKey="2
+                        "
+                    tabPosition="left"
+                    style={{ height: "700px", overflowY: "scroll" }}
+                  >
+                    {systemRap.lstCumRap?.map((heThongRap, index) => {
+                      return (
+                        <TabPane
+                          tab={
+                            <div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "flex-start",
+                                  justifyContent: "space-around",
+                                }}
+                              >
+                                <img
+                                  src={heThongRap.hinhAnh}
+                                  alt=""
+                                  width={50}
+                                  height={50}
+                                />
+                                <div>
+                                  <p
+                                    className="text-left"
+                                    style={{
+                                      marginBottom: 0,
+                                      fontSize: "14px",
+                                    }}
+                                  >
+                                    {heThongRap.tenCumRap}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          }
+                          key={index}
+                        >
+                          {heThongRap.danhSachPhim?.map((dsPhim, index) => {
+                            return (
+                              <div key={index}>
+                                <div className="my-2">
+                                  <div style={{ display: "flex" }}>
+                                    <img
+                                      src={dsPhim.hinhAnh}
+                                      alt={dsPhim.hinhAnh}
+                                      width={100}
+                                      height={150}
+                                    />
+                                    <h4
+                                      className="text-info ml-4"
+                                      style={{
+                                        alignItems: "center",
+                                        display: "flex",
+                                      }}
+                                    >
+                                      {dsPhim.tenPhim}
+                                    </h4>
+                                  </div>
+                                </div>
+                                <div>
+                                  {dsPhim.lstLichChieuTheoPhim.map(
+                                    (xuatChieu, index) => {
+                                      return (
+                                        <Space>
+                                          <Tag color="gold" className="mb-2">
+                                            <NavLink
+                                              style={{ textDecoration: "none" }}
+                                              key={index}
+                                              to={`/booking/${xuatChieu.maLichChieu}`}
+                                            >
+                                              {formatTime(
+                                                xuatChieu.ngayChieuGioChieu
+                                              )}
+                                            </NavLink>
+                                          </Tag>
+                                        </Space>
+                                      );
+                                    }
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </TabPane>
+                      );
+                    })}
+                  </Tabs>
+                )}
               </TabPane>
             );
           })}

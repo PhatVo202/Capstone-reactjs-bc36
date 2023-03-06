@@ -117,6 +117,7 @@ export default function Profile() {
                   backgroundColor: "#87d068",
                   width: "150px",
                   height: "150px",
+                  lineHeight: "150px",
                 }}
                 icon={
                   <UserOutlined

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchMovieListApi } from "../../../../services/movie";
-import { Button } from "antd";
+import { Button, Card } from "antd";
 import { useMovieList } from "../../../../hooks/useMovieList";
 
 import Slider from "react-slick";
@@ -13,7 +13,7 @@ export default function MovieList() {
     infinite: false,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
       {
@@ -49,30 +49,51 @@ export default function MovieList() {
   const renderMovieList = () => {
     return movieList.map((ele) => {
       return (
-        <div
-          key={ele.maPhim}
-          className="card "
-          style={{ marginBottom: 20, height: 600 }}
+        // <div
+        //   key={ele.maPhim}
+        //   className="card"
+        //   style={{ marginBottom: 20, height: 600 }}
+        // >
+        //   <img
+        //     style={{ height: 350, objectFit: "cover" }}
+        //     className="card-img-top img-fluid"
+        //     src={ele.hinhAnh}
+        //     alt="movie"
+        //   />
+        //   <div className="card-body">
+        //     <h6 className="card-title" style={{ height: "40px" }}>
+        //       {ele.tenPhim}
+        //     </h6>
+        //     <Button
+        //       onClick={() => navigate(`/movie-detail/${ele.maPhim}`)}
+        //       size="large"
+        //       danger
+        //     >
+        //       Xem chi tiết
+        //     </Button>
+        //   </div>
+        // </div>
+
+        <Card
+          hoverable
+          style={{ height: "900px" }}
+          cover={
+            <img
+              style={{ height: "350px", objectFit: "cover" }}
+              alt={ele.hinhAnh}
+              src={ele.hinhAnh}
+            />
+          }
         >
-          <img
-            style={{ height: 350, objectFit: "cover" }}
-            className="card-img-top img-fluid"
-            src={ele.hinhAnh}
-            alt="movie"
-          />
-          <div className="card-body">
-            <h6 className="card-title" style={{ height: "40px" }}>
-              {ele.tenPhim}
-            </h6>
-            <Button
-              onClick={() => navigate(`/movie-detail/${ele.maPhim}`)}
-              size="large"
-              danger
-            >
-              Xem chi tiết
-            </Button>
-          </div>
-        </div>
+          <h6 style={{ height: "40px" }}>{ele.tenPhim}</h6>
+          <Button
+            onClick={() => navigate(`/movie-detail/${ele.maPhim}`)}
+            size="large"
+            danger
+          >
+            Xem chi tiết
+          </Button>
+        </Card>
       );
     });
   };
