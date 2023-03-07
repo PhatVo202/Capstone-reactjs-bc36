@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Space, Tag, Table, Button, Input } from "antd";
-import { getUserListApi, searchUserListApi } from "services/user";
+import { Space, Tag, Table, Button, Input, notification } from "antd";
+import {
+  deleteUserApi,
+  getUserListApi,
+  searchUserListApi,
+} from "services/user";
 import { LoadingContext } from "contexts/loading/LoadingContext";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserListAction } from "store/actions/userListAction";
+import Swal from "sweetalert2";
 
 export default function UserList() {
   const navigate = useNavigate();
@@ -27,6 +32,23 @@ export default function UserList() {
     console.log(result.data.content);
     setUserList(result.data.content);
     setLoadingState({ isLoading: false });
+  };
+
+  const handleDeleteUser = async (id) => {
+    try {
+      await deleteUserApi(id);
+      Swal.fire({
+        title: "Xoá người dùng thành công!",
+        text: "Hoàn tất!!",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      notification.error({
+        message: error.response.data.content,
+      });
+    }
   };
 
   const columns = [
@@ -70,7 +92,7 @@ export default function UserList() {
             <Button
               onClick={() => {
                 dispatch(setUserListAction(text));
-                navigate("/admin/adduser");
+                navigate("/admin/edituser");
               }}
               size="small"
             >
@@ -79,7 +101,10 @@ export default function UserList() {
               </Space>
             </Button>
 
-            <Button size="small">
+            <Button
+              onClick={() => handleDeleteUser(text.taiKhoan)}
+              size="small"
+            >
               <Space>
                 <DeleteOutlined />
               </Space>

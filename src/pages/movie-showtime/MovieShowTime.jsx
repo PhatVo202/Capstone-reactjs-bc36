@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  DatePicker,
-  Form,
-  Input,
-  Radio,
-  Select,
-  Divider,
-  Space,
-  Tag,
-} from "antd";
+import { Button, DatePicker, Form, Input, Select, Space, Tag } from "antd";
 import { fetchMovieDetailApi } from "services/movie";
 import { useParams } from "react-router-dom";
 import { fetchInfoCumRapApi, fetchInfoRapApi } from "services/inforcluster";
 import { addCalenderMovieApi } from "services/ticket";
+import moment from "moment";
 
 export default function MovieShowTime() {
   const params = useParams();
@@ -53,8 +44,8 @@ export default function MovieShowTime() {
   const renderCumRap = () => {
     return cumRap.map((item, index) => {
       return (
-        <Select.Option key={index} value={item.tenCumRap}>
-          {item.tenCumRap}
+        <Select.Option key={index} value={item.maCumRap}>
+          {item.maCumRap}
         </Select.Option>
       );
     });
@@ -62,12 +53,14 @@ export default function MovieShowTime() {
 
   const handleChange = async (event) => {
     const result = await fetchInfoCumRapApi(event);
+    console.log(result);
     setCumRap(result.data.content);
   };
 
   const handleFinish = async (values) => {
-    values.ngayChieuGioChieu =
-      values.ngayChieuGioChieu.format("DD/MM/YYYY h:mm:ss");
+    values.ngayChieuGioChieu = values.ngayChieuGioChieu.format(
+      "DD/MM/YYYY hh:mm:ss "
+    );
 
     const formData = new FormData();
 
@@ -123,23 +116,20 @@ export default function MovieShowTime() {
             maxWidth: 600,
           }}
         >
-          <Form.Item label="Form Size" name="size">
-            <Radio.Group>
-              <Radio.Button value="small">Small</Radio.Button>
-              <Radio.Button value="default">Default</Radio.Button>
-              <Radio.Button value="large">Large</Radio.Button>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Hệ thống rạp" name="maRap">
+          <Form.Item label="Hệ thống rạp">
             <Select onChange={(event) => handleChange(event)}>
               {renderHeThongRap()}
             </Select>
           </Form.Item>
-          <Form.Item label="Cụm rạp">
+          <Form.Item label="Cụm rạp" name="maRap">
             <Select>{renderCumRap()}</Select>
           </Form.Item>
           <Form.Item label="Ngày chiếu" name="ngayChieuGioChieu" {...config}>
-            <DatePicker showTime format="YYYY-MM-DD HH:mm" />
+            <DatePicker
+              showTime
+              name="ngayChieuGioChieu"
+              format="YYYY-MM-DD HH:mm"
+            />
           </Form.Item>
           <Form.Item label="Giá vé" name="giaVe">
             <Input />

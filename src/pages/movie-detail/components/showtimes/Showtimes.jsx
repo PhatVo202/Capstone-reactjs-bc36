@@ -34,7 +34,6 @@ export default function Showtimes() {
           tab={
             <div className="">
               <img src={item.logo} alt="" width={50} height={50} />
-              <span className="ml-2">{item.maHeThongRap}</span>
             </div>
           }
           key={index}

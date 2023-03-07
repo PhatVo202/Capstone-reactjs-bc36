@@ -17,6 +17,7 @@ import MovieShowTime from "pages/movie-showtime/MovieShowTime";
 import Profile from "pages/profile/Profile";
 import UserList from "pages/userlist/UserList";
 import UserForm from "pages/use-form/UserForm";
+import EditFormUser from "pages/editformuser/EditFormUser";
 
 export default function Router() {
   const routing = useRoutes([
@@ -83,6 +84,10 @@ export default function Router() {
             {
               path: "/admin/adduser",
               element: <UserForm />,
+            },
+            {
+              path: "/admin/edituser",
+              element: <EditFormUser />,
             },
             {
               path: "/admin/films",

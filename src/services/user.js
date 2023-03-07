@@ -69,3 +69,10 @@ export const updateUserApi = (data) => {
     data: data,
   });
 };
+
+export const deleteUserApi = (id) => {
+  return axiosRequest({
+    url: `/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${id}`,
+    method: "DELETE",
+  });
+};

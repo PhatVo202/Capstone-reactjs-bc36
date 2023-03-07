@@ -63,7 +63,6 @@ const items = [
       ),
     ]
   ),
-  getItem("ShowTime", "5", <FileOutlined />),
 ];
 
 export const AdminLayout = () => {

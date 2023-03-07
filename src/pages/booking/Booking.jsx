@@ -7,14 +7,13 @@ import Seat from "./components/Seat";
 import * as _ from "lodash"; // thư viện lodash
 
 export default function Booking() {
-// sau khi đặt vé thành công sẽ navigate
+  // sau khi đặt vé thành công sẽ navigate
   const navigate = useNavigate();
 
   const [ticketDetail, setTicketDetail] = useState({});
   const [selectedSeatList, setSelectedSeatList] = useState([]);
 
   const params = useParams();
-  
 
   useEffect(() => {
     getTicketDetail();
@@ -26,7 +25,7 @@ export default function Booking() {
     setTicketDetail(result.data.content);
   };
 
-// render danh sách ghế
+  // render danh sách ghế
   const renderSeats = () => {
     return ticketDetail?.danhSachGhe?.map((ele, idx) => {
       return (
@@ -56,7 +55,7 @@ export default function Booking() {
     console.log(selectedSeatList);
   }, [selectedSeatList]);
 
-//booking
+  //booking
   const bookTicket = async () => {
     const data = {
       maLichChieu: params.id,
@@ -70,14 +69,14 @@ export default function Booking() {
 
     await bookTicketApi(data);
     alert("Đặt vé thành công");
-  // navigate sang trang HOME
+    // navigate sang trang HOME
     navigate("/");
   };
 
   return (
     <div className="py-5">
       <div className="row">
-        <div className="col-8 mb-4">
+        <div className="col-8 mb-4 mt-5">
           <div style={{ width: "95%" }} className="mx-auto">
             <div className="mr-1 mb-1 d-inline-block p-2 rounded text-white bg-secondary">
               Seats are booked
@@ -94,6 +93,14 @@ export default function Booking() {
           </div>
         </div>
         <div className="col-8">
+          <div>
+            <img
+              src="https://movie-booking-project.vercel.app/img/bookticket/screen.png"
+              alt="manhinh"
+              width={900}
+              height={90}
+            />
+          </div>
           <div style={{ width: "95%" }} className="mx-auto">
             {renderSeats()}
           </div>

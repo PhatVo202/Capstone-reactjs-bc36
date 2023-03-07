@@ -2,11 +2,13 @@ import { MA_NHOM } from "constants";
 import React, { useEffect, useState } from "react";
 import { fetchListTypeUserApi, addUserApi, updateUserApi } from "services/user";
 
+import Swal from "sweetalert2";
+
 import { Button, notification, Space } from "antd";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function UserForm() {
+export default function EditFormUser() {
   const navigate = useNavigate();
   const hookStateUser = useSelector((state) => state.userListReducer.userList);
   const [typeUser, setTypeUser] = useState([]);
@@ -77,9 +79,9 @@ export default function UserForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await addUserApi(values);
+      await updateUserApi(values);
       Swal.fire({
-        title: "Thêm người dùng thành công!",
+        title: "Cập nhật thành công!",
         text: "Hoàn tất!!",
         icon: "success",
         timer: 2000,
@@ -92,6 +94,23 @@ export default function UserForm() {
       });
     }
   };
+
+  useEffect(() => {
+    if (hookStateUser) {
+      setValues({
+        hoTen: hookStateUser.hoTen,
+        matKhau: hookStateUser.matKhau,
+        taiKhoan: hookStateUser.taiKhoan,
+        email: hookStateUser.email,
+        maLoaiNguoiDung: hookStateUser.maLoaiNguoiDung,
+        soDt: hookStateUser.soDT,
+        maNhom: MA_NHOM,
+      });
+    }
+  }, [hookStateUser]);
+
+  const { hoTen, matKhau, taiKhoan, email, soDt, maLoaiNguoiDung } =
+    values || {};
 
   return (
     <div>
@@ -108,6 +127,7 @@ export default function UserForm() {
               <input
                 title="Tai khoan"
                 type="text"
+                value={taiKhoan}
                 className="form-control"
                 name="taiKhoan"
                 required
@@ -123,6 +143,7 @@ export default function UserForm() {
               <input
                 title="SDT"
                 type="text"
+                value={soDt}
                 className="form-control"
                 name="soDt"
                 required
@@ -138,6 +159,7 @@ export default function UserForm() {
               <input
                 type="text"
                 title="Mat Khau"
+                value={matKhau}
                 className="form-control"
                 name="matKhau"
                 required
@@ -153,6 +175,7 @@ export default function UserForm() {
               <input
                 type="text"
                 title="Ho ten"
+                value={hoTen}
                 className="form-control"
                 name="hoTen"
                 required
@@ -169,6 +192,7 @@ export default function UserForm() {
                 required
                 type="text"
                 title="Email"
+                value={email}
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 className="form-control"
                 name="email"
@@ -185,6 +209,7 @@ export default function UserForm() {
                 class="form-control"
                 title="Mã loại người dùng"
                 required
+                value={maLoaiNguoiDung}
                 name="maLoaiNguoiDung"
                 onChange={(event) => handleChange(event)}
               >
@@ -194,9 +219,9 @@ export default function UserForm() {
             </div>
           </div>
           <div className="col-12 text-right">
-            <Space wrap>
-              <Button htmlType="submit" type="primary" size="large">
-                Thêm
+            <Space wrap className="ml-2">
+              <Button htmlType="submit" danger type="primary" size="large">
+                Cập nhật
               </Button>
             </Space>
           </div>

@@ -19,8 +19,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "antd/es/form/Form";
 import moment from "moment";
 
-import { wait } from "@testing-library/user-event/dist/utils";
-
 export default function MovieForm() {
   const navigate = useNavigate();
   const params = useParams();
