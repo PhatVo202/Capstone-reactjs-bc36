@@ -4,11 +4,15 @@ import { getUserListApi, searchUserListApi } from "services/user";
 import { LoadingContext } from "contexts/loading/LoadingContext";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserListAction } from "store/actions/userListAction";
 
 export default function UserList() {
   const navigate = useNavigate();
   const [_, setLoadingState] = useContext(LoadingContext);
   const [userList, setUserList] = useState([]);
+
+  const dispatch = useDispatch();
 
   const [keyword, setKeyWord] = useState("");
   const [filterData, setFilterData] = useState(null);
@@ -20,7 +24,7 @@ export default function UserList() {
   const getUserList = async () => {
     setLoadingState({ isLoading: true });
     const result = await getUserListApi();
-
+    console.log(result.data.content);
     setUserList(result.data.content);
     setLoadingState({ isLoading: false });
   };
@@ -64,8 +68,8 @@ export default function UserList() {
         return (
           <div>
             <Button
-              onClick={(text) => {
-                console.log(text);
+              onClick={() => {
+                dispatch(setUserListAction(text));
                 navigate("/admin/adduser");
               }}
               size="small"
@@ -98,6 +102,11 @@ export default function UserList() {
           <h4>Danh sách User</h4>
         </Tag>
       </Space>
+      <div className="mt-3">
+        <Button onClick={() => navigate("/admin/adduser")}>
+          Thêm người dùng
+        </Button>
+      </div>
       <div className="mt-3">
         <Input.Search
           placeholder="Search here"

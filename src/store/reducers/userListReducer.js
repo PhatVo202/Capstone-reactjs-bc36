@@ -1,10 +1,10 @@
 import { SET_USER_LIST_TYPE } from "store/types/userListType";
 
-const DEFAULT_STATE = {
+const STATE_USER_LIST = {
   userList: {},
 };
 
-export const userListReducer = (state = DEFAULT_STATE, action) => {
+export const userListReducer = (state = STATE_USER_LIST, action) => {
   const { payload, type } = action;
   switch (type) {
     case SET_USER_LIST_TYPE: {
