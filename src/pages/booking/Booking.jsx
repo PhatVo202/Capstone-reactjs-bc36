@@ -323,22 +323,61 @@ export default function Booking() {
               </div>
             )}
             <div className="col-12 mb-4 ">
-              <div className="mx-auto">
-                <div className="mr-1 mb-1 d-inline-block p-2 rounded text-white bg-secondary">
-                  Seats are booked
+              <div className="mx-auto " style={{ display: "flex" }}>
+                <div className="mr-4 ml-5">
+                  <button
+                    className="btn btn-secondary"
+                    style={{
+                      width: 30,
+                      height: 30,
+                      padding: 0,
+                      borderRadius: "7px",
+                      position: "relative",
+                    }}
+                  ></button>
+                  <p>Ghế đã đặt</p>
                 </div>
-                <div className="mr-1 mb-1 d-inline-block p-2 rounded text-white bg-dark">
-                  Seats not booked
+                <div className="mr-4">
+                  <button
+                    className="btn btn-secondary"
+                    style={{
+                      width: 30,
+                      height: 30,
+                      padding: 0,
+                      borderRadius: "7px",
+                      position: "relative",
+                    }}
+                  ></button>
+                  <p>Ghế chưa đặt</p>
                 </div>
-                <div className="mr-1 mb-1 d-inline-block p-2 rounded text-white bg-primary">
-                  Seats are being booked
+                <div className="mr-4">
+                  <button
+                    className="btn btn-primary"
+                    style={{
+                      width: 30,
+                      height: 30,
+                      padding: 0,
+                      borderRadius: "7px",
+                      position: "relative",
+                    }}
+                  ></button>
+                  <p>Ghế đang đặt</p>
                 </div>
-                <div className="mr-1 mb-1 d-inline-block p-2 rounded text-white bg-warning">
-                  VIP seats
+                <div>
+                  <button
+                    className="btn btn-warning"
+                    style={{
+                      width: 30,
+                      height: 30,
+                      padding: 0,
+                      borderRadius: "7px",
+                      position: "relative",
+                    }}
+                  ></button>
+                  <p>Ghế VIP</p>
                 </div>
               </div>
             </div>
-            //Mobile
           </div>
         </div>
       )}
