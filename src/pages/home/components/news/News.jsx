@@ -9,8 +9,12 @@ export default function News() {
       <div className="container py-5">
         <div className="row ">
           <div className="col-12 col-lg-5 col-xl-5 ">
-            <div className="pl-4">
-              <img src="./img/mobileimg.webp" alt="" height={680} width={408} />
+            <div className="pl-4" style={{ width: "95%", margin: "auto" }}>
+              <img
+                src="./img/mobileimg.webp"
+                alt=""
+                style={{ width: "100%", maxWidth: "100%", display: "block" }}
+              />
             </div>
           </div>
           <div

@@ -1,14 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, NavLink } from "react-router-dom";
 import { fetchMovieShowtimesApi } from "../../../../services/cinema";
 
 import { formatTime } from "../../../../utils";
 
-import { Tabs, Tag, Comment, Tooltip, List } from "antd";
+import { Tabs, Tag, Collapse } from "antd";
+import { useMediaQuery } from "react-responsive";
 
 const { TabPane } = Tabs;
+const { Panel } = Collapse;
 
 export default function Showtimes() {
   //lấy params trên url
@@ -23,7 +25,7 @@ export default function Showtimes() {
 
   const getMovieShowtimes = async () => {
     const result = await fetchMovieShowtimesApi(params.id);
-    console.log(result);
+
     setMovieShowtimes(result.data.content);
   };
 
@@ -76,13 +78,78 @@ export default function Showtimes() {
     });
   };
 
+  const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
+  const isDesktop = useMediaQuery({ query: `(min-width: 768px)` });
+
   return (
     <div className="glass__content mt-5">
       <Tabs style={{ color: "white" }}>
         <TabPane tab="Lịch chiếu" key={1}>
           <Tabs style={{ color: "white" }} tabPosition="left">
-            {renderTabs()}
+            {isDesktop && renderTabs()}
           </Tabs>
+          {isMobile &&
+            movieShowtimes.heThongRapChieu?.map((item, index) => {
+              return (
+                <Collapse key={index} expandIconPosition="right">
+                  <Panel
+                    header={
+                      <div style={{ display: "flex" }}>
+                        <img src={item.logo} alt="" width={60} height={60} />
+                        <p className="text-white mt-3 ml-5">
+                          {item.tenHeThongRap}
+                        </p>
+                      </div>
+                    }
+                    key={index}
+                  >
+                    {item.cumRapChieu.map((cumRap, index) => {
+                      return (
+                        <Collapse key={index} expandIconPosition="right">
+                          <Panel
+                            header={
+                              <div
+                                style={{
+                                  display: "flex",
+                                }}
+                              >
+                                <img
+                                  src={cumRap.hinhAnh}
+                                  alt=""
+                                  width={60}
+                                  height={60}
+                                />
+                                <div className="ml-2">
+                                  <p className="text-primary mb-0">
+                                    {cumRap.tenCumRap}
+                                  </p>
+                                  <p className="text-secondary">
+                                    {cumRap.diaChi}
+                                  </p>
+                                </div>
+                              </div>
+                            }
+                            key={index}
+                          >
+                            {cumRap.lichChieuPhim?.map((xuatChieu, index) => {
+                              return (
+                                <Tag key={index} color="gold">
+                                  <NavLink
+                                    to={`/booking/${xuatChieu.maLichChieu}`}
+                                  >
+                                    {formatTime(xuatChieu.ngayChieuGioChieu)}
+                                  </NavLink>
+                                </Tag>
+                              );
+                            })}
+                          </Panel>
+                        </Collapse>
+                      );
+                    })}
+                  </Panel>
+                </Collapse>
+              );
+            })}
         </TabPane>
         <TabPane tab="Đánh giá" key={2}>
           <section>

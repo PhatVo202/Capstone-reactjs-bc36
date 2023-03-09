@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Button, DatePicker, Form, Input, Select, Space, Tag } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  notification,
+  Select,
+  Space,
+  Tag,
+} from "antd";
 import { fetchMovieDetailApi } from "services/movie";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchInfoCumRapApi, fetchInfoRapApi } from "services/inforcluster";
 import { addCalenderMovieApi } from "services/ticket";
-import moment from "moment";
+
+import Swal from "sweetalert2";
 
 export default function MovieShowTime() {
   const params = useParams();
+  const navigate = useNavigate();
   const [state, setState] = useState({});
   const [heThongRap, setHeThongRap] = useState([]);
   const [cumRap, setCumRap] = useState([]);
@@ -59,17 +70,31 @@ export default function MovieShowTime() {
 
   const handleFinish = async (values) => {
     values.ngayChieuGioChieu = values.ngayChieuGioChieu.format(
-      "DD/MM/YYYY hh:mm:ss "
+      "DD/MM/YYYY hh:mm:ss"
     );
 
-    const formData = new FormData();
+    const data = {
+      maPhim: params.id,
+      ngayChieuGioChieu: values.ngayChieuGioChieu,
+      maRap: values.maRap,
+      giaVe: values.giaVe,
+    };
 
-    formData.append("maPhim", params.id);
-    formData.append("ngayChieuGioChieu", values.ngayChieuGioChieu);
-    formData.append("maRap", values.maRap);
-    formData.append("giaVe", values.giaVe);
-
-    await addCalenderMovieApi(formData);
+    try {
+      await addCalenderMovieApi(data);
+      Swal.fire({
+        title: "Thêm lịch chiếu thành công!",
+        text: "Hoàn tất!!",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      navigate("/admin/films");
+    } catch (error) {
+      notification.error({
+        message: error.response.data.content,
+      });
+    }
   };
 
   const config = {
@@ -128,7 +153,8 @@ export default function MovieShowTime() {
             <DatePicker
               showTime
               name="ngayChieuGioChieu"
-              format="YYYY-MM-DD HH:mm"
+              // format="YYYY-MM-DD HH:mm"
+              format="DD/MM/YYYY hh:mm:ss "
             />
           </Form.Item>
           <Form.Item label="Giá vé" name="giaVe">
