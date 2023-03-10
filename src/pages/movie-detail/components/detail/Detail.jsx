@@ -5,27 +5,23 @@ import { useParams } from "react-router-dom";
 import { fetchMovieDetailApi } from "../../../../services/movie";
 
 import { formatDate } from "../../../../utils";
-import { Rate, Progress, Button, Modal } from "antd";
+import { Rate, Progress, Modal } from "antd";
 import "./style.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function Detail() {
-  // lấy id trên url
   const params = useParams();
 
   const [movieDetail, setMovieDetail] = useState({});
 
-  // call api khi 1 component khởi tạo thì dùng useEffect
   useEffect(() => {
     getMovieDetail();
   }, []);
 
   const getMovieDetail = async () => {
     const result = await fetchMovieDetailApi(params.id);
-    // console.log(result);
-
     setMovieDetail(result.data.content);
   };
 

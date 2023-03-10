@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  Cascader,
   Image,
   DatePicker,
   Form,
   Input,
   InputNumber,
   Radio,
-  Select,
   Switch,
-  TreeSelect,
   notification,
 } from "antd";
 import { addMovieApi, editMovieApi, fetchMovieDetailApi } from "services/movie";

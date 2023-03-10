@@ -10,8 +10,6 @@ import {
 
 import "./stylefooter.css";
 
-import { PlayCircleTwoTone } from "@ant-design/icons";
-
 export default function Footer() {
   return (
     <footer className="py-5" style={{ backgroundColor: "#111111" }}>

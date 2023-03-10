@@ -1,5 +1,4 @@
-import axios from "axios";
-import { BASE_URL, MA_NHOM, TOKEN_CYBERSOFT } from "../constants";
+import { MA_NHOM } from "../constants";
 import { axiosRequest } from "../configs/axios.config";
 
 export const loginApi = (information) => {

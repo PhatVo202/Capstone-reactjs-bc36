@@ -1,14 +1,13 @@
 import { MA_NHOM } from "constants";
 import React, { useEffect, useState } from "react";
-import { fetchListTypeUserApi, addUserApi, updateUserApi } from "services/user";
+import { fetchListTypeUserApi, addUserApi } from "services/user";
 
 import { Button, notification, Space } from "antd";
-import { useSelector } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 
 export default function UserForm() {
   const navigate = useNavigate();
-  const hookStateUser = useSelector((state) => state.userListReducer.userList);
   const [typeUser, setTypeUser] = useState([]);
   const [values, setValues] = useState({
     taiKhoan: "",

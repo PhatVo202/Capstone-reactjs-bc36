@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Space } from "antd";
 import { fetchBannerCarouselListApi } from "services/carouselbanner";
 
 import { CloseOutlined } from "@ant-design/icons";
-import homeCarouselData from "constants/homecarouseldata";
+import { useMediaQuery } from "react-responsive";
 
 const contentStyle = {
   width: "100%",
-  height: "100vh",
+  height: "665px",
   objectFit: "cover",
 };
 
@@ -47,7 +47,11 @@ export default function CarouselMovies() {
         <div
           key={index}
           className={`carousel-item ${index === 0 && "active"}`}
-          style={contentStyle}
+          style={
+            isMobile
+              ? { height: "400px", width: "100%", objectFit: "cover" }
+              : contentStyle
+          }
         >
           <img
             className="d-block w-100 img-fluid"
@@ -109,6 +113,8 @@ export default function CarouselMovies() {
       );
     });
   };
+
+  const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
 
   return (
     // <Carousel

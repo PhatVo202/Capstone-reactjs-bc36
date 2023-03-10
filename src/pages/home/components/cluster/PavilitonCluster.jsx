@@ -27,12 +27,10 @@ export default function PavilitonCluster() {
     const result = await fetchSystemClusterApi();
 
     setSystemCluster(result.data.content);
-    // console.log(result);
   };
 
   const getInforCluster = async () => {
     const result = await fetchInforClusterApi(systemCluster.maHeThongRap);
-    console.log(result);
     setInforCluster(result.data.content);
   };
 
@@ -89,7 +87,9 @@ export default function PavilitonCluster() {
                                 height={50}
                               />
                               <div className="ml-3">
-                                <p className="mb-0">{item.tenCumRap}</p>
+                                <p className="mb-0 text-primary">
+                                  {item.tenCumRap}
+                                </p>
                                 <p>{item.diaChi}</p>
                               </div>
                             </div>
@@ -172,7 +172,7 @@ export default function PavilitonCluster() {
                                 />
                                 <div>
                                   <p
-                                    className="text-left"
+                                    className="text-left "
                                     style={{
                                       marginBottom: 0,
                                       fontSize: "14px",

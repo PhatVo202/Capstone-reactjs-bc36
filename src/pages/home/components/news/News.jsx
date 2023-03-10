@@ -13,7 +13,12 @@ export default function News() {
               <img
                 src="./img/mobileimg.webp"
                 alt=""
-                style={{ width: "100%", maxWidth: "100%", display: "block" }}
+                style={{
+                  width: "400px",
+                  maxWidth: "100%",
+                  display: "block",
+                  height: "650px",
+                }}
               />
             </div>
           </div>

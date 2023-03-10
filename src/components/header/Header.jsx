@@ -7,6 +7,7 @@ import "./styleheader.css";
 
 import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 import { Avatar, Space, Button, Dropdown } from "antd";
+import { useMediaQuery } from "react-responsive";
 
 export default function Header() {
   const userState = useSelector((state) => state.userReducer);
@@ -33,8 +34,8 @@ export default function Header() {
       label: (
         <NavLink to="/admin/userlist" style={{ fontSize: "18px" }}>
           <SettingOutlined className="mr-1" />
-
-          {userState.userInfo && userState.userInfo.maLoaiNguoiDung}
+          Quản trị
+          {/* {userState.userInfo && userState.userInfo.maLoaiNguoiDung} */}
         </NavLink>
       ),
       key: "2",
@@ -49,12 +50,18 @@ export default function Header() {
     },
   ];
 
+  const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
+
   return (
     <div className="header__content">
       <div className="container-xl bg-rg">
         <nav className="navbar navbar-expand-md navbar-light ml-auto">
           <Link className="navbar-brand" to="/">
-            <img src="./img/logo.png" width={240} height={70} />
+            <img
+              src="./img/logo.png"
+              width={isMobile ? 150 : 240}
+              height={70}
+            />
           </Link>
           <button
             className="navbar-toggler d-lg-none"

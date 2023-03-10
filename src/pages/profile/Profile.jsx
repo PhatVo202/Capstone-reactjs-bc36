@@ -9,7 +9,7 @@ import { LoadingContext } from "contexts/loading/LoadingContext";
 
 export default function Profile() {
   const formRef = useRef(null);
-  const [laodingState, setLoadingState] = useContext(LoadingContext);
+  const [loadingState, setLoadingState] = useContext(LoadingContext);
   const [stateInfoTk, setStateInfoTk] = useState([]);
   const [stateValues, setStateValues] = useState({
     taiKhoan: "",
@@ -41,7 +41,10 @@ export default function Profile() {
   const renderContentTable = () => {
     return stateInfoTk.thongTinDatVe?.map((item, index) => {
       return (
-        <tr key={index}>
+        <tr
+          key={index}
+          className={(index + 1) % 2 === 0 ? "bg-light" : undefined}
+        >
           <td>{index + 1}</td>
           <td>{item.tenPhim}</td>
           <td>
@@ -110,7 +113,7 @@ export default function Profile() {
     <>
       <div className="container-xl my-5" style={{ overflowX: "hidden" }}>
         <div className="row">
-          <div className="col-3 text-center">
+          <div className="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
             <Space className="mt-5">
               <Avatar
                 style={{
@@ -128,11 +131,11 @@ export default function Profile() {
               />
             </Space>
             <p className="mt-3">{stateInfoTk.hoTen}</p>
-            <p className="text-primary"></p>
+            <p>{stateInfoTk?.loaiNguoiDung?.tenLoai}</p>
           </div>
-          <div className="col-9 ">
+          <div className="col-12 col-sm-12 col-lg-9 col-xl-9 ">
             <div>
-              <Space className="mt-5">
+              <Space className="mt-5 ">
                 <Tag color="#108ee9">
                   <h3>Thông tin người dùng</h3>
                 </Tag>
@@ -140,7 +143,7 @@ export default function Profile() {
 
               <form ref={formRef} className="form-group container mt-4">
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-12 col-lg-6">
                     <label>Tài khoản:</label>
                     <input
                       type="text"
@@ -150,7 +153,7 @@ export default function Profile() {
                       className="form-control w-100"
                     />
                   </div>
-                  <div className="col-6">
+                  <div className="col-12 col-lg-6">
                     <label>Số điện thoại:</label>
                     <input
                       type="text"
@@ -160,7 +163,7 @@ export default function Profile() {
                       className="form-control w-100"
                     />
                   </div>
-                  <div className="col-6">
+                  <div className="col-12 col-lg-6">
                     <label>Mật khẩu:</label>
                     <input
                       type="text"
@@ -170,7 +173,7 @@ export default function Profile() {
                       className="form-control w-100"
                     />
                   </div>
-                  <div className="col-6">
+                  <div className="col-12 col-lg-6">
                     <label>Họ tên:</label>
                     <input
                       type="text"
@@ -180,7 +183,7 @@ export default function Profile() {
                       className="form-control w-100"
                     />
                   </div>
-                  <div className="col-6">
+                  <div className="col-12 col-lg-6">
                     <label>Email:</label>
                     <input
                       type="text"
@@ -190,7 +193,7 @@ export default function Profile() {
                       className="form-control w-100"
                     />
                   </div>
-                  <div className="col-12 mt-4">
+                  <div className="col-12 col-lg-12 mt-4 text-right">
                     <Space wrap>
                       <Button onClick={() => updateForm(stateValues)}>
                         Cập nhật
@@ -200,24 +203,26 @@ export default function Profile() {
                 </div>
               </form>
 
-              <div className="container">
+              <div className="container-xl">
                 <h4 className="text-primary">Lịch sử đặt vé</h4>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>STT</th>
-                      <th>Tên phim</th>
-                      <th>Hình ảnh</th>
-                      <th>Thời lượng phim</th>
-                      <th>Tên rạp</th>
-                      <th>Ngày đặt</th>
-                      <th>Mã vé</th>
-                      <th>Tên ghế</th>
-                      <th>Tổng tiền</th>
-                    </tr>
-                  </thead>
-                  <tbody>{renderContentTable()}</tbody>
-                </table>
+                <div className="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Tên phim</th>
+                        <th>Hình ảnh</th>
+                        <th>Thời lượng phim</th>
+                        <th>Tên rạp</th>
+                        <th>Ngày đặt</th>
+                        <th>Mã vé</th>
+                        <th>Tên ghế</th>
+                        <th>Tổng tiền</th>
+                      </tr>
+                    </thead>
+                    <tbody>{renderContentTable()}</tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
