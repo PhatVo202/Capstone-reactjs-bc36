@@ -18,6 +18,7 @@ import Profile from "pages/profile/Profile";
 import UserList from "pages/userlist/UserList";
 import UserForm from "pages/use-form/UserForm";
 import EditFormUser from "pages/editformuser/EditFormUser";
+import NotFound from "pages/notfound/NotFound";
 
 export default function Router() {
   const routing = useRoutes([
@@ -108,6 +109,10 @@ export default function Router() {
           ],
         },
       ],
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ]);
 

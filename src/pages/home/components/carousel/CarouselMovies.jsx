@@ -24,23 +24,6 @@ export default function CarouselMovies() {
     setBannerList(result.data.content);
   };
 
-  // const renderBannerList = () => {
-  //   return bannerList.map((item, index) => {
-  //     return (
-  //       <div key={index}>
-  //         <div style={{ height: "100%" }}>
-  //           <img
-  //             // className="img-fluid"
-  //             style={contentStyle}
-  //             src={item.hinhAnh}
-  //             className="img-fluid "
-  //           />
-  //         </div>
-  //       </div>
-  //     );
-  //   });
-  // };
-
   const renderBannerList = () => {
     return bannerList.map((item, index) => {
       return (

@@ -29,6 +29,6 @@
   padding-top: 20px;
 }
 
-/* .anticon svg {
+.ant-modal-content .ant-modal-close-x {
   color: white;
-} */
+}

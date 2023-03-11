@@ -129,14 +129,7 @@ export default function MovieForm() {
       <Form.Item
         label="Tên phim"
         name="tenPhim"
-        rules={[
-          { required: true, message: "Tên phim không được để trống" },
-          { min: 5, message: "Độ dài ký tự phải lớn hơn 5" },
-          {
-            max: 20,
-            message: "Độ dài ký tự không vượt quá 20",
-          },
-        ]}
+        rules={[{ required: true, message: "Tên phim không được để trống" }]}
       >
         <Input />
       </Form.Item>

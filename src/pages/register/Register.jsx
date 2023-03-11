@@ -90,7 +90,7 @@ export default function Register() {
   };
 
   return (
-    <div className="bg__login">
+    <div className="bg__login py-5">
       <div className="center">
         <Space onClick={() => navigate("/")}>
           <CloseOutlined

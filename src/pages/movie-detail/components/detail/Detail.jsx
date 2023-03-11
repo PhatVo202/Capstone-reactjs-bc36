@@ -15,6 +15,7 @@ export default function Detail() {
   const params = useParams();
 
   const [movieDetail, setMovieDetail] = useState({});
+  const [url, setUrl] = useState("");
 
   useEffect(() => {
     getMovieDetail();
@@ -22,6 +23,12 @@ export default function Detail() {
 
   const getMovieDetail = async () => {
     const result = await fetchMovieDetailApi(params.id);
+    console.log(result);
+    let urlData = setUrl(result.data.content.trailer);
+    console.log(url.split("v=")[1]);
+
+    // let urlFilms = urlData.split("v=")[1];
+    // console.log(urlFilms);
     setMovieDetail(result.data.content);
   };
 
@@ -79,7 +86,7 @@ export default function Detail() {
                 <iframe
                   width="560"
                   height="315"
-                  src={`https://www.youtube.com/embed/${movieDetail.trailer}`}
+                  src={`https://www.youtube.com/embed/${url.split("v=")[1]}`}
                   title=""
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
